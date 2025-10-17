@@ -1,4 +1,4 @@
-package com.sopt.dive.presentation
+package com.sopt.dive.presentation.auth
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -34,6 +33,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sopt.dive.R
 import com.sopt.dive.core.designsystem.theme.DiveTheme
+import com.sopt.dive.core.ui.component.textfield.LabelTextField
+import com.sopt.dive.core.ui.component.textfield.PasswordTextField
 
 class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +53,7 @@ class LoginActivity : ComponentActivity() {
 }
 
 @Composable
-fun LoginScreen(modifier: Modifier = Modifier) {
+private fun LoginScreen(modifier: Modifier = Modifier) {
     var idText by remember { mutableStateOf("") }
     var pwdText by remember { mutableStateOf("") }
 
@@ -76,13 +77,10 @@ fun LoginScreen(modifier: Modifier = Modifier) {
             fontWeight = FontWeight.Normal,
         )
 
-        TextField(
+        LabelTextField(
             value = idText,
             onValueChange = { idText = it },
-            placeholder = { Text(stringResource(R.string.id_hint)) },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 10.dp)
+            placeholder = stringResource(R.string.id_hint)
         )
 
         Spacer(Modifier.height(30.dp))
@@ -93,13 +91,10 @@ fun LoginScreen(modifier: Modifier = Modifier) {
             fontWeight = FontWeight.Normal,
         )
 
-        TextField(
+        PasswordTextField(
             value = pwdText,
             onValueChange = { pwdText = it },
-            placeholder = { Text(stringResource(R.string.pwd_hint)) },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 10.dp)
+            placeholder = stringResource(R.string.pwd_hint)
         )
         
         Spacer(Modifier.weight(1f))
