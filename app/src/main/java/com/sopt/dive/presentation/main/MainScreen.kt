@@ -44,7 +44,7 @@ fun MainScreen(
             horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             Text(
-                text = stringResource(R.string.pwd_label),
+                text = stringResource(R.string.password_label),
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Normal,
             )

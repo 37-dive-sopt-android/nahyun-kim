@@ -1,6 +1,5 @@
 package com.sopt.dive.presentation.auth.login
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -38,22 +37,22 @@ fun LoginRoute(
     navigateToSignUp: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var idText by remember { mutableStateOf("") }
-    var pwdText by remember { mutableStateOf("") }
+    var id by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
 
     val context = LocalContext.current
 
     LoginScreen(
         modifier = modifier,
-        id = idText,
-        password = pwdText,
-        onIdChange = { idText = it },
-        onPwdChange = { pwdText = it },
-        onSignInClick = {
-            if (resultUserInfo.id == idText && resultUserInfo.password == pwdText) {
+        id = id,
+        password = password,
+        onIdChange = { id = it },
+        onPasswordChange = { password = it },
+        onLoginClick = {
+            if (resultUserInfo.id == id && resultUserInfo.password == password) {
                 navigateToMain(RegisterInfo(
-                    id = idText,
-                    password = pwdText,
+                    id = id,
+                    password = password,
                     nickname = resultUserInfo.nickname
                 ))
             } else {
@@ -69,8 +68,8 @@ private fun LoginScreen(
     id: String,
     password: String,
     onIdChange: (String) -> Unit,
-    onPwdChange: (String) -> Unit,
-    onSignInClick: () -> Unit,
+    onPasswordChange: (String) -> Unit,
+    onLoginClick: () -> Unit,
     onSignUpClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -103,22 +102,22 @@ private fun LoginScreen(
         Spacer(Modifier.height(30.dp))
 
         Text(
-            text = stringResource(R.string.pwd_label),
+            text = stringResource(R.string.password_label),
             fontSize = 32.sp,
             fontWeight = FontWeight.Normal,
         )
 
         PasswordTextField(
             value = password,
-            onValueChange = onPwdChange,
-            placeholder = stringResource(R.string.pwd_hint)
+            onValueChange = onPasswordChange,
+            placeholder = stringResource(R.string.password_hint)
         )
 
         Spacer(Modifier.weight(1f))
 
         DiveBasicButton(
             text = stringResource(R.string.auth_welcome),
-            onClick = onSignInClick
+            onClick = onLoginClick
         )
 
         Text(
@@ -143,8 +142,8 @@ private fun LoginScreenPreview() {
             id = "",
             password = "",
             onIdChange = {},
-            onPwdChange = {},
-            onSignInClick = {},
+            onPasswordChange = {},
+            onLoginClick = {},
             onSignUpClick = {}
         )
     }

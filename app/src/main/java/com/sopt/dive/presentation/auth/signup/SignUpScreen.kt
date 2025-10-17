@@ -35,31 +35,31 @@ fun SignUpRoute(
     modifier: Modifier = Modifier,
     navigateToSignIn: (id: String, password: String, nickname: String) -> Unit
 ) {
-    var idText by remember { mutableStateOf("") }
-    var pwdText by remember { mutableStateOf("") }
-    var nicknameText by remember { mutableStateOf("") }
-    var mbtiText by remember { mutableStateOf("") }
+    var id by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var nickname by remember { mutableStateOf("") }
+    var mbti by remember { mutableStateOf("") }
 
     val context = LocalContext.current
 
     SignUpScreen(
         modifier = modifier,
-        idText = idText,
-        pwdText = pwdText,
-        nicknameText = nicknameText,
-        mbtiText = mbtiText,
-        onIdChange = { idText = it},
-        onPwdChange = { pwdText = it},
-        onNicknameChange = { nicknameText = it},
-        onMbtiChange = { mbtiText = it},
+        id = id,
+        password = password,
+        nickname = nickname,
+        mbti = mbti,
+        onIdChange = { id = it},
+        onPasswordChange = { password = it},
+        onNicknameChange = { nickname = it},
+        onMbtiChange = { mbti = it},
         onSignUpClick = {
             if (with(AuthValidator) {
-                    validateId(idText)
-                    validatePassword(pwdText)
-                    validateNickname(nicknameText)
-                    validateMbti(mbtiText)
+                    validateId(id)
+                    validatePassword(password)
+                    validateNickname(nickname)
+                    validateMbti(mbti)
                 }) {
-                navigateToSignIn(idText, pwdText, nicknameText)
+                navigateToSignIn(id, password, nickname)
             } else {
                 Toast.makeText(context, "모든 정보를 정확히 입력해세요.", Toast.LENGTH_SHORT).show()
             }
@@ -70,12 +70,12 @@ fun SignUpRoute(
 @Composable
 private fun SignUpScreen(
     modifier: Modifier = Modifier,
-    idText: String,
-    pwdText: String,
-    nicknameText: String,
-    mbtiText: String,
+    id: String,
+    password: String,
+    nickname: String,
+    mbti: String,
     onIdChange: (String) -> Unit,
-    onPwdChange: (String) -> Unit,
+    onPasswordChange: (String) -> Unit,
     onNicknameChange: (String) -> Unit,
     onMbtiChange: (String) -> Unit,
     onSignUpClick: () -> Unit
@@ -86,7 +86,7 @@ private fun SignUpScreen(
             .padding(vertical = 18.dp, horizontal = 16.dp)
     ) {
         Text(
-            text = "SIGN UP",
+            text = stringResource(R.string.title_activity_login),
             fontSize = 30.sp,
             style = TextStyle(fontWeight = FontWeight.Bold),
             modifier = Modifier.align(Alignment.CenterHorizontally)
@@ -106,7 +106,7 @@ private fun SignUpScreen(
                 )
 
                 LabelTextField(
-                    value = idText,
+                    value = id,
                     onValueChange = onIdChange,
                     placeholder = stringResource(R.string.id_hint)
                 )
@@ -114,15 +114,15 @@ private fun SignUpScreen(
 
             Column {
                 Text(
-                    text = stringResource(R.string.pwd_label),
+                    text = stringResource(R.string.password_label),
                     fontSize = 32.sp,
                     fontWeight = FontWeight.Normal,
                 )
 
                 PasswordTextField(
-                    value = pwdText,
-                    onValueChange = onPwdChange,
-                    placeholder = stringResource(R.string.pwd_hint)
+                    value = password,
+                    onValueChange = onPasswordChange,
+                    placeholder = stringResource(R.string.password_hint)
                 )
             }
 
@@ -134,7 +134,7 @@ private fun SignUpScreen(
                 )
 
                 LabelTextField(
-                    value = nicknameText,
+                    value = nickname,
                     onValueChange = onNicknameChange,
                     placeholder = stringResource(R.string.nickname_hint)
                 )
@@ -148,7 +148,7 @@ private fun SignUpScreen(
                 )
 
                 LabelTextField(
-                    value = mbtiText,
+                    value = mbti,
                     onValueChange = onMbtiChange,
                     placeholder = stringResource(R.string.mbti_hint)
                 )
@@ -167,12 +167,12 @@ private fun SignUpScreen(
 private fun LoginScreenPreview() {
     DiveTheme {
         SignUpScreen(
-            idText = "",
-            pwdText = "",
-            nicknameText = "",
-            mbtiText = "",
+            id = "",
+            password = "",
+            nickname = "",
+            mbti = "",
             onIdChange = {},
-            onPwdChange = {},
+            onPasswordChange = {},
             onNicknameChange = {},
             onMbtiChange = {},
             onSignUpClick = {}
