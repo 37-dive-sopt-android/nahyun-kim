@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import com.sopt.dive.core.designsystem.theme.DiveTheme
 import com.sopt.dive.presentation.auth.login.LoginActivity
 import com.sopt.dive.presentation.auth.model.ID_KEY
+import com.sopt.dive.presentation.auth.model.NICKNAME_KEY
 import com.sopt.dive.presentation.auth.model.PASSWORD_KEY
 
 class SignUpActivity : ComponentActivity() {
@@ -31,12 +32,12 @@ class SignUpActivity : ComponentActivity() {
         }
     }
 
-    private fun sendUserRegisterInfo(id: String, password: String) {
+    private fun sendUserRegisterInfo(id: String, password: String, nickname: String) {
         val intent = Intent(this, LoginActivity::class.java)
             .putExtra(ID_KEY, id)
             .putExtra(PASSWORD_KEY, password)
+            .putExtra(NICKNAME_KEY, nickname)
         setResult(RESULT_OK, intent)
         finish()
-//        startActivity(intent)
     }
 }

@@ -34,7 +34,7 @@ import com.sopt.dive.presentation.auth.model.RegisterInfo
 @Composable
 fun LoginRoute(
     resultUserInfo: RegisterInfo,
-    navigateToLogin: () -> Unit,
+    navigateToMain: (RegisterInfo) -> Unit,
     navigateToSignUp: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -50,9 +50,12 @@ fun LoginRoute(
         onIdChange = { idText = it },
         onPwdChange = { pwdText = it },
         onSignInClick = {
-            Log.d("RegisterInfo", resultUserInfo.toString())
             if (resultUserInfo.id == idText && resultUserInfo.password == pwdText) {
-                navigateToLogin()
+                navigateToMain(RegisterInfo(
+                    id = idText,
+                    password = pwdText,
+                    nickname = resultUserInfo.nickname
+                ))
             } else {
                 Toast.makeText(context, "아이디 또는 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show()
             }

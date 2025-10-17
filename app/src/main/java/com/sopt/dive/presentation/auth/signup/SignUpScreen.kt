@@ -1,6 +1,5 @@
 package com.sopt.dive.presentation.auth.signup
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -34,7 +33,7 @@ import com.sopt.dive.core.util.AuthValidator
 @Composable
 fun SignUpRoute(
     modifier: Modifier = Modifier,
-    navigateToSignIn: (id: String, password: String) -> Unit
+    navigateToSignIn: (id: String, password: String, nickname: String) -> Unit
 ) {
     var idText by remember { mutableStateOf("") }
     var pwdText by remember { mutableStateOf("") }
@@ -60,8 +59,7 @@ fun SignUpRoute(
                     validateNickname(nicknameText)
                     validateMbti(mbtiText)
                 }) {
-                Log.d("SignUp", "정보 보내기")
-                navigateToSignIn(idText, pwdText)
+                navigateToSignIn(idText, pwdText, nicknameText)
             } else {
                 Toast.makeText(context, "모든 정보를 정확히 입력해세요.", Toast.LENGTH_SHORT).show()
             }
