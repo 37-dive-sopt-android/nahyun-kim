@@ -4,16 +4,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,16 +19,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sopt.dive.R
+import com.sopt.dive.core.designsystem.component.DiveBasicButton
 import com.sopt.dive.core.designsystem.theme.DiveTheme
 import com.sopt.dive.core.ui.component.textfield.LabelTextField
 import com.sopt.dive.core.ui.component.textfield.PasswordTextField
@@ -73,18 +67,9 @@ private fun SignUpScreen(modifier: Modifier = Modifier) {
             modifier = Modifier.weight(1f)
         )
 
-        Text(
-            text = "회원가입하기",
-            fontSize = 18.sp,
-            color = Color.White,
-            style = TextStyle(fontWeight = FontWeight.Normal),
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .clip(CircleShape)
-                .background(Color.Gray)
-                .padding(vertical = 12.dp)
-                .fillMaxWidth()
-                .clickable(onClick = {})
+        DiveBasicButton(
+            text = stringResource(R.string.do_signup),
+            onClick = {}
         )
     }
 }
@@ -105,7 +90,7 @@ private fun TextFieldContent(
     ) {
         Column {
             Text(
-                text = "ID",
+                text = stringResource(R.string.id_label),
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Normal,
             )
@@ -119,7 +104,7 @@ private fun TextFieldContent(
 
         Column {
             Text(
-                text = "PW",
+                text = stringResource(R.string.pwd_label),
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Normal,
             )
@@ -133,7 +118,7 @@ private fun TextFieldContent(
 
         Column {
             Text(
-                text = "NICKNAME",
+                text = stringResource(R.string.nickname_label),
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Normal,
             )
@@ -147,7 +132,7 @@ private fun TextFieldContent(
 
         Column {
             Text(
-                text = "MBTI",
+                text = stringResource(R.string.mbti_label),
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Normal,
             )
