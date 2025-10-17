@@ -1,4 +1,4 @@
-package com.sopt.dive
+package com.sopt.dive.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -32,7 +32,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sopt.dive.ui.theme.DiveTheme
+import com.sopt.dive.R
+import com.sopt.dive.core.designsystem.theme.DiveTheme
 
 class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
