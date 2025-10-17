@@ -1,5 +1,7 @@
 package com.sopt.dive.presentation.auth.login
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -15,6 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -26,9 +29,11 @@ import com.sopt.dive.core.designsystem.component.DiveBasicButton
 import com.sopt.dive.core.designsystem.theme.DiveTheme
 import com.sopt.dive.core.ui.component.textfield.LabelTextField
 import com.sopt.dive.core.ui.component.textfield.PasswordTextField
+import com.sopt.dive.presentation.auth.model.RegisterInfo
 
 @Composable
 fun LoginRoute(
+    resultUserInfo: RegisterInfo,
     navigateToLogin: () -> Unit,
     navigateToSignUp: () -> Unit,
     modifier: Modifier = Modifier
@@ -36,13 +41,22 @@ fun LoginRoute(
     var idText by remember { mutableStateOf("") }
     var pwdText by remember { mutableStateOf("") }
 
+    val context = LocalContext.current
+
     LoginScreen(
         modifier = modifier,
         id = idText,
         password = pwdText,
         onIdChange = { idText = it },
         onPwdChange = { pwdText = it },
-        onSignInClick = navigateToLogin,
+        onSignInClick = {
+            Log.d("RegisterInfo", resultUserInfo.toString())
+            if (resultUserInfo.id == idText && resultUserInfo.password == pwdText) {
+                navigateToLogin()
+            } else {
+                Toast.makeText(context, "아이디 또는 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show()
+            }
+        },
         onSignUpClick = navigateToSignUp
     )
 }

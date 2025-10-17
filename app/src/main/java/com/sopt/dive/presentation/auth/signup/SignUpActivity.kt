@@ -1,5 +1,6 @@
 package com.sopt.dive.presentation.auth.signup
 
+import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,6 +12,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import com.sopt.dive.core.designsystem.theme.DiveTheme
 import com.sopt.dive.presentation.auth.login.LoginActivity
+import com.sopt.dive.presentation.auth.model.ID_KEY
+import com.sopt.dive.presentation.auth.model.PASSWORD_KEY
 
 class SignUpActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,10 +24,19 @@ class SignUpActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     SignUpRoute(
                         modifier =  Modifier.padding(innerPadding),
-                        navigateToSignIn = { startActivity(Intent(this, LoginActivity::class.java)) }
+                        navigateToSignIn = ::sendUserRegisterInfo
                     )
                 }
             }
         }
+    }
+
+    private fun sendUserRegisterInfo(id: String, password: String) {
+        val intent = Intent(this, LoginActivity::class.java)
+            .putExtra(ID_KEY, id)
+            .putExtra(PASSWORD_KEY, password)
+        setResult(RESULT_OK, intent)
+        finish()
+//        startActivity(intent)
     }
 }
