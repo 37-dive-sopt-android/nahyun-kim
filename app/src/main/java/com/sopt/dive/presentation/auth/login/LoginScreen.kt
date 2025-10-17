@@ -1,16 +1,11 @@
-package com.sopt.dive.presentation.auth
+package com.sopt.dive.presentation.auth.login
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -32,27 +27,36 @@ import com.sopt.dive.core.designsystem.theme.DiveTheme
 import com.sopt.dive.core.ui.component.textfield.LabelTextField
 import com.sopt.dive.core.ui.component.textfield.PasswordTextField
 
-class LoginActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            DiveTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    LoginScreen(
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
-        }
-    }
-}
-
 @Composable
-private fun LoginScreen(modifier: Modifier = Modifier) {
+fun LoginRoute(
+    navigateToLogin: () -> Unit,
+    navigateToSignUp: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     var idText by remember { mutableStateOf("") }
     var pwdText by remember { mutableStateOf("") }
 
+    LoginScreen(
+        modifier = modifier,
+        id = idText,
+        password = pwdText,
+        onIdChange = { idText = it },
+        onPwdChange = { pwdText = it },
+        onSignInClick = navigateToLogin,
+        onSignUpClick = navigateToSignUp
+    )
+}
+
+@Composable
+private fun LoginScreen(
+    id: String,
+    password: String,
+    onIdChange: (String) -> Unit,
+    onPwdChange: (String) -> Unit,
+    onSignInClick: () -> Unit,
+    onSignUpClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -74,8 +78,8 @@ private fun LoginScreen(modifier: Modifier = Modifier) {
         )
 
         LabelTextField(
-            value = idText,
-            onValueChange = { idText = it },
+            value = id,
+            onValueChange = onIdChange,
             placeholder = stringResource(R.string.id_hint)
         )
 
@@ -88,18 +92,18 @@ private fun LoginScreen(modifier: Modifier = Modifier) {
         )
 
         PasswordTextField(
-            value = pwdText,
-            onValueChange = { pwdText = it },
+            value = password,
+            onValueChange = onPwdChange,
             placeholder = stringResource(R.string.pwd_hint)
         )
-        
+
         Spacer(Modifier.weight(1f))
 
         DiveBasicButton(
             text = stringResource(R.string.auth_welcome),
-            onClick = {}
+            onClick = onSignInClick
         )
-        
+
         Text(
             text = stringResource(R.string.do_signup),
             fontSize = 14.sp,
@@ -108,7 +112,7 @@ private fun LoginScreen(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(top = 5.dp)
-                .clickable(onClick = {})
+                .clickable(onClick = onSignUpClick)
                 .padding(5.dp)
         )
     }
@@ -118,6 +122,13 @@ private fun LoginScreen(modifier: Modifier = Modifier) {
 @Composable
 private fun LoginScreenPreview() {
     DiveTheme {
-        LoginScreen()
+        LoginScreen(
+            id = "",
+            password = "",
+            onIdChange = {},
+            onPwdChange = {},
+            onSignInClick = {},
+            onSignUpClick = {}
+        )
     }
 }

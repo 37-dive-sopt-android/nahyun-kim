@@ -60,13 +60,14 @@ fun DiveBasicTextField(
             maxLines = maxLines,
             decorationBox = { innerTextField ->
                 Row(
-                    modifier = Modifier.fillMaxSize().padding(horizontal = 4.dp),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 4.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Box(
-                        modifier = Modifier.weight(1f),
-                        contentAlignment = Alignment.TopStart,
+                        modifier = Modifier.weight(1f)
                     ) {
                         if (value.isEmpty()) {
                             Text(
