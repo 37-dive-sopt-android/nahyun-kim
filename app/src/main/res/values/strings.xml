@@ -4,4 +4,6 @@
     <!-- common -->
     <string name="id_hint">아이디를 입력해주세요</string>
     <string name="pwd_hint">비밀번호를 입력해주세요</string>
+    <string name="nickname_hint">닉네임을 입력해주세요</string>
+    <string name="mbti_hint">MBTI를 입력해주세요</string>
 </resources>
