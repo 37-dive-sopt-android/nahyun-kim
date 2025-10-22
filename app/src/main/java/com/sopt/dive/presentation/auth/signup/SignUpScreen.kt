@@ -54,10 +54,7 @@ fun SignUpRoute(
         onMbtiChange = { mbti = it},
         onSignUpClick = {
             if (with(AuthValidator) {
-                    validateId(id)
-                    validatePassword(password)
-                    validateNickname(nickname)
-                    validateMbti(mbti)
+                    validateId(id) && validatePassword(password) && validateNickname(nickname) && validateMbti(mbti)
                 }) {
                 navigateToSignIn(id, password, nickname)
             } else {
