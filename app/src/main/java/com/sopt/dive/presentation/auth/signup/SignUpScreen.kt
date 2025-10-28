@@ -1,6 +1,7 @@
 package com.sopt.dive.presentation.auth.signup
 
 import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -25,9 +26,9 @@ import androidx.compose.ui.unit.sp
 import com.sopt.dive.R
 import com.sopt.dive.core.designsystem.component.DiveBasicButton
 import com.sopt.dive.core.designsystem.theme.DiveTheme
-import com.sopt.dive.core.ui.component.textfield.LabelTextField
-import com.sopt.dive.core.ui.component.textfield.PasswordTextField
-import com.sopt.dive.core.util.AuthValidator
+import com.sopt.dive.core.ui.component.textfield.ErrorLabelTextField
+import com.sopt.dive.presentation.auth.model.RegisterError
+import com.sopt.dive.presentation.auth.util.AuthValidator
 
 
 @Composable
@@ -40,7 +41,7 @@ fun SignUpRoute(
     var nickname by remember { mutableStateOf("") }
     var mbti by remember { mutableStateOf("") }
 
-    val context = LocalContext.current
+    val context = LocalContext.current 
 
     SignUpScreen(
         modifier = modifier,
@@ -95,66 +96,70 @@ private fun SignUpScreen(
             verticalArrangement = Arrangement.spacedBy(35.dp),
             modifier = Modifier.weight(1f)
         ) {
-            Column {
-                Text(
-                    text = stringResource(R.string.id_label),
-                    fontSize = 32.sp,
-                    fontWeight = FontWeight.Normal,
-                )
+            SignUpFormTextField(
+                titleLabelRes = R.string.id_label,
+                placeholderRes = R.string.id_hint,
+                value = id,
+                onValueChange = onIdChange,
+                registerError = RegisterError.ID_ERROR
+            )
 
-                LabelTextField(
-                    value = id,
-                    onValueChange = onIdChange,
-                    placeholder = stringResource(R.string.id_hint)
-                )
-            }
+            SignUpFormTextField(
+                titleLabelRes = R.string.password_label,
+                placeholderRes = R.string.password_hint,
+                value = password,
+                onValueChange = onPasswordChange,
+                registerError = RegisterError.PASSWORD_ERROR
+            )
 
-            Column {
-                Text(
-                    text = stringResource(R.string.password_label),
-                    fontSize = 32.sp,
-                    fontWeight = FontWeight.Normal,
-                )
+            SignUpFormTextField(
+                titleLabelRes = R.string.nickname_label,
+                placeholderRes = R.string.nickname_hint,
+                value = nickname,
+                onValueChange = onNicknameChange,
+                registerError = RegisterError.NICKNAME_ERROR
+            )
 
-                PasswordTextField(
-                    value = password,
-                    onValueChange = onPasswordChange,
-                    placeholder = stringResource(R.string.password_hint)
-                )
-            }
-
-            Column {
-                Text(
-                    text = stringResource(R.string.nickname_label),
-                    fontSize = 32.sp,
-                    fontWeight = FontWeight.Normal,
-                )
-
-                LabelTextField(
-                    value = nickname,
-                    onValueChange = onNicknameChange,
-                    placeholder = stringResource(R.string.nickname_hint)
-                )
-            }
-
-            Column {
-                Text(
-                    text = stringResource(R.string.mbti_label),
-                    fontSize = 32.sp,
-                    fontWeight = FontWeight.Normal,
-                )
-
-                LabelTextField(
-                    value = mbti,
-                    onValueChange = onMbtiChange,
-                    placeholder = stringResource(R.string.mbti_hint)
-                )
-            }
+            SignUpFormTextField(
+                titleLabelRes = R.string.mbti_label,
+                placeholderRes = R.string.mbti_hint,
+                value = mbti,
+                onValueChange = onMbtiChange,
+                registerError = RegisterError.MBTI_ERROR
+            )
         }
 
         DiveBasicButton(
             text = stringResource(R.string.do_signup),
             onClick = onSignUpClick
+        )
+    }
+}
+
+@Composable
+private fun SignUpFormTextField(
+    @StringRes titleLabelRes: Int,
+    @StringRes placeholderRes: Int,
+    value: String,
+    onValueChange: (String) -> Unit,
+    registerError: RegisterError,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+    ) {
+        Text(
+            text = stringResource(titleLabelRes),
+            fontSize = 32.sp,
+            fontWeight = FontWeight.Normal,
+        )
+
+        ErrorLabelTextField(
+            value = value,
+            onValueChange = onValueChange,
+            errorMessage = registerError.message,
+            isError = registerError.validation(value),
+            placeholder = stringResource(placeholderRes)
         )
     }
 }
