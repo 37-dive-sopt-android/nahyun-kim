@@ -29,7 +29,8 @@ fun ErrorLabelTextField(
     errorMessage: String,
     modifier: Modifier = Modifier,
     isError: Boolean = false,
-    keyboardOptions: KeyboardOptions = KeyboardOptions.Default
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    visualTransformation: VisualTransformation = VisualTransformation.None
 ) {
     Column(
         modifier = modifier.fillMaxWidth()
@@ -40,9 +41,9 @@ fun ErrorLabelTextField(
             onValueChange = onValueChange,
             keyboardOptions = keyboardOptions,
             keyboardActions = KeyboardActions.Default,
-            visualTransformation = VisualTransformation.None,
+            visualTransformation = visualTransformation,
             placeholder = placeholder,
-            maxLines = 1
+            maxLines = 1,
         )
 
         Text(
