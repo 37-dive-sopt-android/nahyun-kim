@@ -49,10 +49,10 @@ fun SignUpRoute(
         password = password,
         nickname = nickname,
         mbti = mbti,
-        onIdChange = { id = it},
-        onPasswordChange = { password = it},
-        onNicknameChange = { nickname = it},
-        onMbtiChange = { mbti = it},
+        onIdChange = { id = it },
+        onPasswordChange = { password = it },
+        onNicknameChange = { nickname = it },
+        onMbtiChange = { mbti = it },
         onSignUpClick = {
             if (with(AuthValidator) {
                     validateId(id) && validatePassword(password) && validateNickname(nickname) && validateMbti(mbti)
@@ -93,7 +93,7 @@ private fun SignUpScreen(
         Spacer(Modifier.height(50.dp))
 
         Column(
-            verticalArrangement = Arrangement.spacedBy(35.dp),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
             modifier = Modifier.weight(1f)
         ) {
             SignUpFormTextField(
@@ -145,6 +145,8 @@ private fun SignUpFormTextField(
     registerError: RegisterError,
     modifier: Modifier = Modifier
 ) {
+    val isError = value.isNotBlank() && !registerError.validation(value)
+
     Column(
         modifier = modifier
     ) {
@@ -158,7 +160,7 @@ private fun SignUpFormTextField(
             value = value,
             onValueChange = onValueChange,
             errorMessage = registerError.message,
-            isError = registerError.validation(value),
+            isError = isError,
             placeholder = stringResource(placeholderRes)
         )
     }

@@ -12,6 +12,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
@@ -44,14 +45,14 @@ fun ErrorLabelTextField(
             maxLines = 1
         )
 
-        if (isError) {
-            Text(
-                text = errorMessage,
-                fontSize = 10.sp,
-                color = Color.Red,
-                modifier = Modifier.padding(top = 4.dp)
-            )
-        }
+        Text(
+            text = errorMessage,
+            fontSize = 10.sp,
+            color = Color.Red,
+            modifier = Modifier
+                .padding(top = 2.dp)
+                .alpha(if (isError) 1f else 0f)
+        )
     }
 }
 
