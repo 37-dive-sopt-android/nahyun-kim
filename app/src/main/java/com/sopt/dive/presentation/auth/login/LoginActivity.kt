@@ -6,9 +6,13 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.exclude
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.ScaffoldDefaults
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -42,9 +46,16 @@ class LoginActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             DiveTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    contentWindowInsets = ScaffoldDefaults.contentWindowInsets.exclude(WindowInsets.ime)
+                ) { innerPadding ->
                     LoginRoute(
-                        resultUserInfo = RegisterInfo(registerId, registerPassword, registerNickname),
+                        resultUserInfo = RegisterInfo(
+                            registerId,
+                            registerPassword,
+                            registerNickname
+                        ),
                         navigateToMain = ::sendUserRegisterInfo,
                         navigateToSignUp = {
                             signupResultLauncher.launch(Intent(this, SignUpActivity::class.java))

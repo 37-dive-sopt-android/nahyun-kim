@@ -26,6 +26,7 @@
         <activity
             android:name=".presentation.auth.signup.SignUpActivity"
             android:exported="true"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.Dive"/>
         <activity
             android:name=".presentation.MainActivity"
