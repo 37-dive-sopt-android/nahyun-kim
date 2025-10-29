@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -20,6 +21,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -96,7 +98,10 @@ private fun LoginScreen(
         LabelTextField(
             value = id,
             onValueChange = onIdChange,
-            placeholder = stringResource(R.string.id_hint)
+            placeholder = stringResource(R.string.id_hint),
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Next
+            )
         )
 
         Spacer(Modifier.height(30.dp))
@@ -110,7 +115,10 @@ private fun LoginScreen(
         PasswordTextField(
             value = password,
             onValueChange = onPasswordChange,
-            placeholder = stringResource(R.string.password_hint)
+            placeholder = stringResource(R.string.password_hint),
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Done
+            )
         )
 
         Spacer(Modifier.weight(1f))
