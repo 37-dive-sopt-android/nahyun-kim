@@ -168,7 +168,10 @@ private fun SignUpFormTextField(
             errorMessage = registerError.message,
             isError = isError,
             placeholder = stringResource(placeholderRes),
-            visualTransformation = if (registerError == RegisterError.PASSWORD_ERROR) PasswordVisualTransformation() else VisualTransformation.None,
+            visualTransformation = when (registerError) {
+                RegisterError.PASSWORD_ERROR -> PasswordVisualTransformation()
+                else -> VisualTransformation.None
+            },
             keyboardOptions = KeyboardOptions(
                 imeAction = when (registerError) {
                     RegisterError.MBTI_ERROR -> ImeAction.Done

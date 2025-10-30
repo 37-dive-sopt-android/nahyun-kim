@@ -35,9 +35,9 @@ class LoginActivity : ComponentActivity() {
     ) { result ->
         if (result.resultCode == RESULT_OK) {
             val data = result.data
-            registerId = data?.getStringExtra(ID_KEY) ?: ""
-            registerPassword = data?.getStringExtra(PASSWORD_KEY) ?: ""
-            registerNickname = data?.getStringExtra(NICKNAME_KEY) ?: ""
+            registerId = data?.getStringExtra(ID_KEY).orEmpty()
+            registerPassword = data?.getStringExtra(PASSWORD_KEY).orEmpty()
+            registerNickname = data?.getStringExtra(NICKNAME_KEY).orEmpty()
         }
     }
 

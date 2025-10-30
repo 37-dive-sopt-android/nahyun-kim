@@ -25,9 +25,9 @@ class MainActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     MainScreen(
                         resultUserInfo = RegisterInfo(
-                            id = intent.getStringExtra(ID_KEY) ?: "",
-                            password = intent.getStringExtra(PASSWORD_KEY) ?: "",
-                            nickname = intent.getStringExtra(NICKNAME_KEY) ?: ""
+                            id = intent.getStringExtra(ID_KEY).orEmpty(),
+                            password = intent.getStringExtra(PASSWORD_KEY).orEmpty(),
+                            nickname = intent.getStringExtra(NICKNAME_KEY).orEmpty()
                         ),
                         modifier = Modifier.padding(innerPadding)
                     )
