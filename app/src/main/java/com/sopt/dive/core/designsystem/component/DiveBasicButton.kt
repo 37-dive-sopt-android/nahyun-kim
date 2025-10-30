@@ -1,7 +1,6 @@
 package com.sopt.dive.core.designsystem.component
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
@@ -15,6 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.sopt.dive.core.util.noRippleClickable
 
 @Composable
 fun DiveBasicButton(
@@ -33,6 +33,6 @@ fun DiveBasicButton(
             .background(Color(0xFF007294))
             .padding(vertical = 12.dp)
             .fillMaxWidth()
-            .clickable(onClick = onClick)
+            .noRippleClickable(onClick = onClick)
     )
 }

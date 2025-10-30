@@ -1,7 +1,6 @@
 package com.sopt.dive.presentation.auth.login
 
 import android.widget.Toast
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -31,6 +30,7 @@ import com.sopt.dive.core.designsystem.component.DiveBasicButton
 import com.sopt.dive.core.designsystem.theme.DiveTheme
 import com.sopt.dive.core.ui.component.textfield.LabelTextField
 import com.sopt.dive.core.ui.component.textfield.PasswordTextField
+import com.sopt.dive.core.util.noRippleClickable
 import com.sopt.dive.presentation.auth.model.RegisterInfo
 
 @Composable
@@ -138,7 +138,7 @@ private fun LoginScreen(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(top = 5.dp)
-                .clickable(onClick = onSignUpClick)
+                .noRippleClickable(onClick = onSignUpClick)
                 .padding(5.dp)
         )
     }
