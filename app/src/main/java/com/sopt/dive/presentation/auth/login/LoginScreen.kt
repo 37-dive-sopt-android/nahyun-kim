@@ -52,6 +52,10 @@ fun LoginRoute(
         onIdChange = { id = it },
         onPasswordChange = { password = it },
         onLoginClick = {
+            if (id.isBlank() || password.isBlank()) {
+                Toast.makeText(context, "아이디 또는 비밀번호를 입력해주세요.", Toast.LENGTH_SHORT).show()
+                return@LoginScreen
+            }
             if (resultUserInfo.id == id && resultUserInfo.password == password) {
                 navigateToMain(RegisterInfo(
                     id = id,
