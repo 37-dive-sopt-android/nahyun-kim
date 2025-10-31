@@ -1,9 +1,10 @@
-package com.sopt.dive.presentation.auth.signup
+package com.sopt.dive.presentation.signup
 
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -32,14 +33,15 @@ import com.sopt.dive.R
 import com.sopt.dive.core.designsystem.component.DiveBasicButton
 import com.sopt.dive.core.designsystem.theme.DiveTheme
 import com.sopt.dive.core.ui.component.textfield.ErrorLabelTextField
-import com.sopt.dive.presentation.auth.model.RegisterError
-import com.sopt.dive.presentation.auth.util.AuthValidator
+import com.sopt.dive.core.util.AuthValidator
+import com.sopt.dive.domain.model.auth.RegisterError
+import com.sopt.dive.presentation.signin.navigation.SignIn
 
 
 @Composable
 fun SignUpRoute(
-    modifier: Modifier = Modifier,
-    navigateToSignIn: (id: String, password: String, nickname: String) -> Unit
+    paddingValues: PaddingValues,
+    navigateToSignIn: (SignIn) -> Unit
 ) {
     var id by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -49,7 +51,7 @@ fun SignUpRoute(
     val context = LocalContext.current 
 
     SignUpScreen(
-        modifier = modifier,
+        modifier = Modifier.padding(paddingValues),
         id = id,
         password = password,
         nickname = nickname,
@@ -62,7 +64,7 @@ fun SignUpRoute(
             if (with(AuthValidator) {
                     validateId(id) && validatePassword(password) && validateNickname(nickname) && validateMbti(mbti)
                 }) {
-                navigateToSignIn(id, password, nickname)
+                navigateToSignIn(SignIn(id, password, nickname, mbti))
             } else {
                 Toast.makeText(context, "모든 정보를 정확히 입력해세요.", Toast.LENGTH_SHORT).show()
             }
