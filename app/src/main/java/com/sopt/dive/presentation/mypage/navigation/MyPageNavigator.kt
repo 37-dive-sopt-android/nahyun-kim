@@ -6,7 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import com.sopt.dive.core.navigation.Route
+import com.sopt.dive.core.navigation.MainTabRoute
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -15,7 +15,7 @@ data class MyPage(
     val password: String = "",
     val nickname: String = "",
     val mbti: String = ""
-) : Route
+) : MainTabRoute
 
 fun NavController.navigateToMyPage(
     userInfo: MyPage,

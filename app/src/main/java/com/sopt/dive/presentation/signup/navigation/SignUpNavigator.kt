@@ -30,8 +30,8 @@ fun NavGraphBuilder.signUpNavGraph(
 ) {
     composable<SignUp> {
         SignUpRoute(
+            paddingValues = paddingValues,
             navigateToSignIn = navigateToSignIn,
-            modifier = Modifier.padding(paddingValues)
         )
     }
 }
