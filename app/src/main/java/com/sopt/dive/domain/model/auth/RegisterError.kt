@@ -1,4 +1,4 @@
-package com.sopt.dive.model.auth
+package com.sopt.dive.domain.model.auth
 
 import com.sopt.dive.core.util.AuthValidator
 

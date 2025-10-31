@@ -5,25 +5,18 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import androidx.navigation.toRoute
 import com.sopt.dive.core.navigation.MainTabRoute
 import com.sopt.dive.presentation.mypage.MyPageRoute
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class MyPage(
-    val id: String = "",
-    val password: String = "",
-    val nickname: String = "",
-    val mbti: String = ""
-) : MainTabRoute
+data object MyPage : MainTabRoute
 
 fun NavController.navigateToMyPage(
-    userInfo: MyPage,
     navOptions: NavOptions? = null
 ) {
     navigate(
-        route = userInfo,
+        route = MyPage,
         navOptions = navOptions
     )
 }
@@ -33,8 +26,7 @@ fun NavGraphBuilder.myPageNavGraph(
 ) {
     composable<MyPage> { backStackEntry ->
         MyPageRoute(
-            paddingValues = paddingValues,
-            userInfo = backStackEntry.toRoute<MyPage>(),
+            paddingValues = paddingValues
         )
     }
 }

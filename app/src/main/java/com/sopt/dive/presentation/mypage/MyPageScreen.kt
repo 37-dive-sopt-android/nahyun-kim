@@ -11,10 +11,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -23,22 +25,25 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sopt.dive.R
 import com.sopt.dive.core.designsystem.theme.DiveTheme
-import com.sopt.dive.presentation.mypage.navigation.MyPage
+import com.sopt.dive.data.local.UserPreferences
+import com.sopt.dive.domain.model.auth.UserInfo
 
 @Composable
 fun MyPageRoute(
-    paddingValues: PaddingValues,
-    userInfo: MyPage
+    paddingValues: PaddingValues
 ) {
+    val context = LocalContext.current
+    val userPreferences = remember { UserPreferences(context) }
+
     MypageScreen(
-        resultUserInfo = userInfo,
+        userInfo = userPreferences.getUserInfo(),
         modifier = Modifier.padding(paddingValues)
     )
 }
 
 @Composable
 fun MypageScreen(
-    resultUserInfo: MyPage,
+    userInfo: UserInfo,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -68,7 +73,7 @@ fun MypageScreen(
             )
 
             Text(
-                text = resultUserInfo.id,
+                text = userInfo.id,
                 fontSize = 24.sp
             )
         }
@@ -84,7 +89,7 @@ fun MypageScreen(
             )
 
             Text(
-                text = resultUserInfo.password,
+                text = userInfo.password,
                 fontSize = 24.sp,
             )
         }
@@ -100,7 +105,23 @@ fun MypageScreen(
             )
 
             Text(
-                text = resultUserInfo.nickname,
+                text = userInfo.nickname,
+                fontSize = 24.sp,
+            )
+        }
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            Text(
+                text = stringResource(R.string.mbti_label),
+                fontSize = 32.sp,
+                fontWeight = FontWeight.Normal,
+            )
+
+            Text(
+                text = userInfo.mbti,
                 fontSize = 24.sp,
             )
         }
@@ -112,10 +133,11 @@ fun MypageScreen(
 private fun MainScreenPreview() {
     DiveTheme {
         MypageScreen(
-            resultUserInfo = MyPage(
+            userInfo = UserInfo(
                 id = "nahyun",
                 password = "password",
-                nickname = "작나"
+                nickname = "작나",
+                mbti = "ESTP"
             ),
         )
     }

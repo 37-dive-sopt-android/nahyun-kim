@@ -75,15 +75,12 @@ class MainNavigator(
         when (tab) {
             MainTab.HOME -> { navController.navigateToHome(navOptions) }
             MainTab.SEARCH -> { navController.navigateToSearch(navOptions) }
-            MainTab.MY -> { navController.navigateToMyPage(userInfo = MyPage(), navOptions)}
+            MainTab.MY -> { navController.navigateToMyPage(navOptions) }
         }
     }
 
-    fun navigateToMyPage(
-        userInfo: MyPage
-    ) {
+    fun navigateToMyPage() {
         navController.navigateToMyPage(
-            userInfo = userInfo,
             navOptions = navOptions {
                 popUpTo(navController.graph.id) {
                     inclusive = true

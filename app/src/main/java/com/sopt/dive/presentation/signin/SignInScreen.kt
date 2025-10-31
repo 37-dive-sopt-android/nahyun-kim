@@ -32,20 +32,21 @@ import com.sopt.dive.core.designsystem.theme.DiveTheme
 import com.sopt.dive.core.ui.component.textfield.LabelTextField
 import com.sopt.dive.core.ui.component.textfield.PasswordTextField
 import com.sopt.dive.core.util.noRippleClickable
-import com.sopt.dive.presentation.mypage.navigation.MyPage
+import com.sopt.dive.data.local.UserPreferences
 import com.sopt.dive.presentation.signin.navigation.SignIn
 
 @Composable
 fun SignInRoute(
     paddingValues: PaddingValues,
     registerUserInfo: SignIn?,
-    navigateToMain: (MyPage) -> Unit,
+    navigateToMain: () -> Unit,
     navigateToSignUp: () -> Unit
 ) {
+    val context = LocalContext.current
+    val userPreferences = remember { UserPreferences(context) }
+
     var id by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-
-    val context = LocalContext.current
 
     SignInScreen(
         modifier = Modifier.padding(paddingValues),
@@ -65,14 +66,13 @@ fun SignInRoute(
             }
 
             if (registerUserInfo.id == id && registerUserInfo.password == password) {
-                navigateToMain(
-                    MyPage(
-                        id = id,
-                        password = password,
-                        nickname = registerUserInfo.nickname,
-                        mbti = registerUserInfo.mbti
-                    )
+                userPreferences.saveUserInfo(
+                    id = id,
+                    password = password,
+                    nickname = registerUserInfo.nickname,
+                    mbti = registerUserInfo.mbti
                 )
+                navigateToMain()
             } else {
                 Toast.makeText(context, "아이디 또는 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show()
             }

@@ -34,7 +34,7 @@ import com.sopt.dive.core.designsystem.component.DiveBasicButton
 import com.sopt.dive.core.designsystem.theme.DiveTheme
 import com.sopt.dive.core.ui.component.textfield.ErrorLabelTextField
 import com.sopt.dive.core.util.AuthValidator
-import com.sopt.dive.model.auth.RegisterError
+import com.sopt.dive.domain.model.auth.RegisterError
 import com.sopt.dive.presentation.signin.navigation.SignIn
 
 

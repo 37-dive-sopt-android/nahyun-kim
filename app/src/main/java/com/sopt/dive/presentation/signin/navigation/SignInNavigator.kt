@@ -31,7 +31,7 @@ fun NavController.navigateToSignIn(
 
 fun NavGraphBuilder.signInNavGraph(
     paddingValues: PaddingValues,
-    navigateToMain: (MyPage) -> Unit,
+    navigateToMain: () -> Unit,
     navigateToSignUp: () -> Unit
 ) {
     composable<SignIn> { backStackEntry ->
