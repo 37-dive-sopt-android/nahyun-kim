@@ -4,6 +4,7 @@ import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -39,7 +40,7 @@ import com.sopt.dive.presentation.signin.navigation.SignIn
 
 @Composable
 fun SignUpRoute(
-    modifier: Modifier = Modifier,
+    paddingValues: PaddingValues,
     navigateToSignIn: (SignIn) -> Unit
 ) {
     var id by remember { mutableStateOf("") }
@@ -50,7 +51,7 @@ fun SignUpRoute(
     val context = LocalContext.current 
 
     SignUpScreen(
-        modifier = modifier,
+        modifier = Modifier.padding(paddingValues),
         id = id,
         password = password,
         nickname = nickname,

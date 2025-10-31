@@ -1,8 +1,8 @@
 package com.sopt.dive.presentation.signin
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -37,10 +37,10 @@ import com.sopt.dive.presentation.signin.navigation.SignIn
 
 @Composable
 fun SignInRoute(
+    paddingValues: PaddingValues,
     registerUserInfo: SignIn?,
     navigateToMain: (MyPage) -> Unit,
-    navigateToSignUp: () -> Unit,
-    modifier: Modifier = Modifier
+    navigateToSignUp: () -> Unit
 ) {
     var id by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -48,7 +48,7 @@ fun SignInRoute(
     val context = LocalContext.current
 
     SignInScreen(
-        modifier = modifier,
+        modifier = Modifier.padding(paddingValues),
         id = id,
         password = password,
         onIdChange = { id = it },
