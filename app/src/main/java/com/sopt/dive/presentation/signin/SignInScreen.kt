@@ -1,5 +1,6 @@
-package com.sopt.dive.presentation.auth.login
+package com.sopt.dive.presentation.signin
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -31,12 +32,13 @@ import com.sopt.dive.core.designsystem.theme.DiveTheme
 import com.sopt.dive.core.ui.component.textfield.LabelTextField
 import com.sopt.dive.core.ui.component.textfield.PasswordTextField
 import com.sopt.dive.core.util.noRippleClickable
-import com.sopt.dive.presentation.auth.model.RegisterInfo
+import com.sopt.dive.presentation.mypage.navigation.MyPage
+import com.sopt.dive.presentation.signin.navigation.SignIn
 
 @Composable
-fun LoginRoute(
-    resultUserInfo: RegisterInfo,
-    navigateToMain: (RegisterInfo) -> Unit,
+fun SignInRoute(
+    registerUserInfo: SignIn?,
+    navigateToMain: (MyPage) -> Unit,
     navigateToSignUp: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -45,7 +47,7 @@ fun LoginRoute(
 
     val context = LocalContext.current
 
-    LoginScreen(
+    SignInScreen(
         modifier = modifier,
         id = id,
         password = password,
@@ -54,14 +56,23 @@ fun LoginRoute(
         onLoginClick = {
             if (id.isBlank() || password.isBlank()) {
                 Toast.makeText(context, "아이디 또는 비밀번호를 입력해주세요.", Toast.LENGTH_SHORT).show()
-                return@LoginScreen
+                return@SignInScreen
             }
-            if (resultUserInfo.id == id && resultUserInfo.password == password) {
-                navigateToMain(RegisterInfo(
-                    id = id,
-                    password = password,
-                    nickname = resultUserInfo.nickname
-                ))
+
+            if (registerUserInfo == null) {
+                Toast.makeText(context, "회원가입 정보가 없습니다.", Toast.LENGTH_SHORT).show()
+                return@SignInScreen
+            }
+
+            if (registerUserInfo.id == id && registerUserInfo.password == password) {
+                navigateToMain(
+                    MyPage(
+                        id = id,
+                        password = password,
+                        nickname = registerUserInfo.nickname,
+                        mbti = registerUserInfo.mbti
+                    )
+                )
             } else {
                 Toast.makeText(context, "아이디 또는 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show()
             }
@@ -71,7 +82,7 @@ fun LoginRoute(
 }
 
 @Composable
-private fun LoginScreen(
+private fun SignInScreen(
     id: String,
     password: String,
     onIdChange: (String) -> Unit,
@@ -152,7 +163,7 @@ private fun LoginScreen(
 @Composable
 private fun LoginScreenPreview() {
     DiveTheme {
-        LoginScreen(
+        SignInScreen(
             id = "",
             password = "",
             onIdChange = {},

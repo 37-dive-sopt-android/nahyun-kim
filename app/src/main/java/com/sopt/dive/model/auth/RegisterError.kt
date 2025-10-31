@@ -1,6 +1,6 @@
-package com.sopt.dive.presentation.auth.model
+package com.sopt.dive.model.auth
 
-import com.sopt.dive.presentation.auth.util.AuthValidator
+import com.sopt.dive.core.util.AuthValidator
 
 enum class RegisterError(
     val message: String,
