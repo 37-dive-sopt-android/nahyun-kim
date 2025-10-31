@@ -11,6 +11,7 @@ import com.sopt.dive.presentation.mypage.navigation.myPageNavGraph
 import com.sopt.dive.presentation.search.navigation.searchNavGraph
 import com.sopt.dive.presentation.signin.navigation.signInNavGraph
 import com.sopt.dive.presentation.signup.navigation.signUpNavGraph
+import com.sopt.dive.presentation.splash.navigation.splashNavGraph
 import kotlinx.collections.immutable.toPersistentList
 
 @Composable
@@ -34,6 +35,12 @@ fun MainScreen(
             navController = navigator.navController,
             startDestination = navigator.startDestination
         ) {
+            splashNavGraph(
+                paddingValues = paddingValues,
+                navigateToAuth = { navigator::navigateToSignIn },
+                navigateToHome = navigator::navigateToHome
+            )
+
             homeNavGraph(
                 paddingValues = paddingValues
             )
@@ -48,7 +55,7 @@ fun MainScreen(
 
             signInNavGraph(
                 paddingValues = paddingValues,
-                navigateToMain = navigator::navigateToMyPage,
+                navigateToMain = navigator::navigateToHome,
                 navigateToSignUp = navigator::navigateToSignUp,
             )
 

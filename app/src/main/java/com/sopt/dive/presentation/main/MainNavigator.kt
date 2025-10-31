@@ -9,7 +9,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.sopt.dive.presentation.home.navigation.navigateToHome
-import com.sopt.dive.presentation.mypage.navigation.MyPage
 import com.sopt.dive.presentation.mypage.navigation.navigateToMyPage
 import com.sopt.dive.presentation.search.navigation.navigateToSearch
 import com.sopt.dive.presentation.signin.navigation.SignIn
@@ -79,8 +78,8 @@ class MainNavigator(
         }
     }
 
-    fun navigateToMyPage() {
-        navController.navigateToMyPage(
+    fun navigateToHome() {
+        navController.navigateToHome(
             navOptions = navOptions {
                 popUpTo(navController.graph.id) {
                     inclusive = true
