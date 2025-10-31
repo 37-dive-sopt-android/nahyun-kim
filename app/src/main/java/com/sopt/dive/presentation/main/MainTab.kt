@@ -11,7 +11,7 @@ import com.sopt.dive.presentation.home.navigation.Home
 import com.sopt.dive.presentation.mypage.navigation.MyPage
 import com.sopt.dive.presentation.search.navigation.Search
 
-internal enum class MainTab(
+enum class MainTab(
     val icon: ImageVector,
     val route: MainTabRoute,
     val label: String

@@ -7,6 +7,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.sopt.dive.core.navigation.MainTabRoute
+import com.sopt.dive.presentation.mypage.MyPageRoute
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -31,7 +32,7 @@ fun NavGraphBuilder.myPageNavGraph(
     paddingValues: PaddingValues,
 ) {
     composable<MyPage> { backStackEntry ->
-        _root_ide_package_.com.sopt.dive.presentation.mypage.MyPageRoute(
+        MyPageRoute(
             paddingValues = paddingValues,
             userInfo = backStackEntry.toRoute<MyPage>(),
         )
