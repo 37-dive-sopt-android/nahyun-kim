@@ -64,9 +64,7 @@ fun FriendCard(
             }
         }
         Spacer(Modifier.weight(1f))
-        ProfileTag(
-            profileTag = friendProfile.profileTag
-        )
+        ProfileTag(profileTag = friendProfile.profileTag)
     }
 }
 
@@ -81,16 +79,25 @@ fun ProfileTag(
         else -> ""
     }
 
-    if (!tagText.isNullOrBlank()) {
-        Text(
-            text = tagText,
-            color = Color.Black,
-            fontSize = 10.sp,
+    if (tagText.isNotBlank()) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
             modifier = modifier
                 .clip(CircleShape)
-                .border(1.dp, Color.Gray, CircleShape)
+                .border(1.dp, profileTag.tagStyle.borderColor, CircleShape)
                 .padding(vertical = 2.dp, horizontal = 6.dp)
-        )
+        ) {
+            Text(
+                text = tagText,
+                color = Color.Black,
+                fontSize = 10.sp
+            )
+            Text( // TODO: 아이콘으로 변경
+                text = profileTag.tagStyle.icon,
+                fontSize = 10.sp
+            )
+        }
     }
 }
 
