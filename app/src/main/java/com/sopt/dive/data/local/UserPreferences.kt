@@ -15,6 +15,7 @@ class UserPreferences(context: Context) {
             putString(USER_NICKNAME_KEY, nickname)
             putString(USER_MBTI_KEY, mbti)
             putBoolean(IS_LOGGED_IN_KEY, false)
+            apply()
         }
     }
 
