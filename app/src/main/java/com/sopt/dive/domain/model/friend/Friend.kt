@@ -10,10 +10,6 @@ data class Friend(
 
 val dummyFriends = persistentListOf(
     Friend(
-        profileColor = Color.Cyan,
-        nickname = "김나현"
-    ),
-    Friend(
         profileColor = Color.Blue,
         nickname = "완두콩 3조"
     ),
