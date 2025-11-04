@@ -1,10 +1,12 @@
 package com.sopt.dive.presentation.home.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
@@ -20,12 +22,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sopt.dive.core.designsystem.theme.DiveTheme
-import com.sopt.dive.domain.model.friend.Friend
+import com.sopt.dive.domain.model.friend.FriendProfile
+import com.sopt.dive.domain.model.friend.ProfileTag
 
 @Composable
 fun FriendCard(
     order: Int,
-    friend: Friend,
+    friendProfile: FriendProfile,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -41,25 +44,53 @@ fun FriendCard(
             modifier = Modifier
                 .size(40.dp)
                 .clip(CircleShape)
-                .background(friend.profileColor)
+                .background(friendProfile.profileColor)
         )
         Column(
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = friend.nickname,
+                text = friendProfile.nickname,
                 color = Color.Black,
                 fontWeight = FontWeight.Medium,
                 fontSize = 16.sp
             )
-            if (!friend.bio.isNullOrBlank()) {
+            if (!friendProfile.bio.isNullOrBlank()) {
                 Text(
-                    text = friend.bio,
+                    text = friendProfile.bio,
                     color = Color.DarkGray,
                     fontSize = 12.sp
                 )
             }
         }
+        Spacer(Modifier.weight(1f))
+        ProfileTag(
+            profileTag = friendProfile.profileTag
+        )
+    }
+}
+
+@Composable
+fun ProfileTag(
+    profileTag: ProfileTag,
+    modifier: Modifier = Modifier
+) {
+    val tagText = when (profileTag) {
+        is ProfileTag.Birthday -> "선물하기"
+        is ProfileTag.Music -> "${profileTag.musicName} - ${profileTag.musicAuthor}"
+        else -> ""
+    }
+
+    if (!tagText.isNullOrBlank()) {
+        Text(
+            text = tagText,
+            color = Color.Black,
+            fontSize = 10.sp,
+            modifier = modifier
+                .clip(CircleShape)
+                .border(1.dp, Color.Gray, CircleShape)
+                .padding(vertical = 2.dp, horizontal = 6.dp)
+        )
     }
 }
 
@@ -69,7 +100,7 @@ private fun FriendCardPreview() {
     DiveTheme {
         FriendCard(
             order = 1,
-            friend = Friend(
+            friendProfile = FriendProfile(
                 profileColor = Color.Blue,
                 nickname = "김나현"
             )

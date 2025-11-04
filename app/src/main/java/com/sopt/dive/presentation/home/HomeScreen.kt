@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.sp
 import com.sopt.dive.R
 import com.sopt.dive.core.designsystem.theme.DiveTheme
 import com.sopt.dive.data.local.UserPreferences
-import com.sopt.dive.domain.model.friend.dummyFriends
+import com.sopt.dive.domain.model.friend.dummyFriendProfiles
 import com.sopt.dive.presentation.home.component.FriendCard
 import com.sopt.dive.presentation.home.component.MyProfileCard
 
@@ -64,12 +64,12 @@ fun HomeScreen(
         }
 
         itemsIndexed(
-            items = dummyFriends,
+            items = dummyFriendProfiles,
             key = { _, friend -> friend.nickname }
         ) { index, friend ->
             FriendCard(
                 order = index + 1,
-                friend = friend,
+                friendProfile = friend,
                 modifier = Modifier.fillMaxWidth()
             )
         }
