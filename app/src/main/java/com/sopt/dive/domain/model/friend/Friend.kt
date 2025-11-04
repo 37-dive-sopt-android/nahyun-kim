@@ -6,16 +6,19 @@ import kotlinx.collections.immutable.persistentListOf
 data class Friend(
     val profileColor: Color,
     val nickname: String,
+    val bio: String? = null
 )
 
 val dummyFriends = persistentListOf(
     Friend(
         profileColor = Color.Blue,
-        nickname = "완두콩 3조"
+        nickname = "완두콩 3조",
+        bio = "코드리뷰 파이팅!!"
     ),
     Friend(
         profileColor = Color.Yellow,
-        nickname = "갓동민"
+        nickname = "갓동민",
+        bio = "👑"
     ),
     Friend(
         profileColor = Color.Magenta,
@@ -27,7 +30,8 @@ val dummyFriends = persistentListOf(
     ),
     Friend(
         profileColor = Color.Green,
-        nickname = "완두콩"
+        nickname = "완두콩",
+        bio = "떼굴뗴굴"
     ),
     Friend(
         profileColor = Color.LightGray,
@@ -39,7 +43,8 @@ val dummyFriends = persistentListOf(
     ),
     Friend(
         profileColor = Color.Yellow,
-        nickname = "학교 가기 싫어요"
+        nickname = "학교 가기 싫어요",
+        bio = "휴학 솝트가.. 그렇게 좋다죠??ㅠㅠ"
     ),
     Friend(
         profileColor = Color.Yellow,
@@ -47,7 +52,8 @@ val dummyFriends = persistentListOf(
     ),
     Friend(
         profileColor = Color.Green,
-        nickname = "잠을자고싶어요"
+        nickname = "잠을자고싶어요",
+        bio = "Zzzzzzzzz"
     ),
     Friend(
         profileColor = Color.Magenta,
