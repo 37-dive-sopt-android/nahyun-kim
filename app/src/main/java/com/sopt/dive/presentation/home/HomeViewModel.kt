@@ -20,7 +20,7 @@ class HomeViewModel : ViewModel() {
     private val _friendProfiles = MutableStateFlow(dummyFriendProfiles)
     val friendProfile: StateFlow<ImmutableList<FriendProfile>> = _friendProfiles
 
-    fun setMyProfile(context: Context) { // TODO: 수정 필요
+    fun setMyProfile(context: Context) { // TODO: hilt 의존성 주입 후 수정
         _myProfile.value = UserPreferences(context).getUserInfo()
     }
 
