@@ -152,9 +152,9 @@ private fun SignInScreen(
             color = Color.Gray,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
-                .padding(top = 5.dp)
-                .noRippleClickable(onClick = onSignUpClick)
                 .padding(5.dp)
+                .noRippleClickable(onClick = onSignUpClick)
+                .padding(top = 5.dp)
         )
     }
 }

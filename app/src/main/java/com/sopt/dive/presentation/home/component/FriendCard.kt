@@ -64,12 +64,12 @@ fun FriendCard(
             }
         }
         Spacer(Modifier.weight(1f))
-        ProfileTag(profileTag = friendProfile.profileTag)
+        ProfileExtraTag(profileTag = friendProfile.profileTag)
     }
 }
 
 @Composable
-fun ProfileTag(
+fun ProfileExtraTag(
     profileTag: ProfileTag,
     modifier: Modifier = Modifier
 ) {
