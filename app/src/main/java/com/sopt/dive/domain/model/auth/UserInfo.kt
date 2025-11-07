@@ -5,4 +5,13 @@ data class UserInfo(
     val password: String,
     val nickname: String,
     val mbti: String
-)
+) {
+    companion object {
+        val Fake = UserInfo(
+            id = "id",
+            password = "password",
+            nickname = "nickname",
+            mbti = "INFP"
+        )
+    }
+}

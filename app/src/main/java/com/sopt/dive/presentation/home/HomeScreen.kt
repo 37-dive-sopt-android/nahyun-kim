@@ -9,29 +9,35 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sopt.dive.R
 import com.sopt.dive.core.designsystem.theme.DiveTheme
-import com.sopt.dive.data.local.UserPreferences
-import com.sopt.dive.domain.model.friend.dummyFriendProfiles
+import com.sopt.dive.domain.model.friend.FriendProfile
+import com.sopt.dive.presentation.home.HomeViewModel.Companion.dummyFriendProfile
 import com.sopt.dive.presentation.home.component.FriendCard
 import com.sopt.dive.presentation.home.component.MyProfileCard
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun HomeRoute(
-    paddingValues: PaddingValues
+    paddingValues: PaddingValues,
+    viewModel: HomeViewModel = viewModel()
 ) {
     val context = LocalContext.current
-    val userPreferences = remember { UserPreferences(context) }
+
+    viewModel.setMyProfile(context)
+    val userInfo = viewModel.myProfile.collectAsState().value
 
     HomeScreen(
-        myNickname = userPreferences.getUserInfo().nickname,
+        myNickname = userInfo.nickname,
+        friendList = viewModel.friendProfile.collectAsState().value,
         modifier = Modifier.padding(paddingValues)
     )
 }
@@ -39,6 +45,7 @@ fun HomeRoute(
 @Composable
 fun HomeScreen(
     myNickname: String,
+    friendList: ImmutableList<FriendProfile>,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -64,7 +71,7 @@ fun HomeScreen(
         }
 
         itemsIndexed(
-            items = dummyFriendProfiles,
+            items = friendList,
             key = { _, friend -> friend.nickname }
         ) { index, friend ->
             FriendCard(
@@ -81,7 +88,8 @@ fun HomeScreen(
 private fun HomeScreenPreview() {
     DiveTheme {
         HomeScreen(
-            myNickname = "잠만보"
+            myNickname = "잠만보",
+            friendList = dummyFriendProfile
         )
     }
 }
