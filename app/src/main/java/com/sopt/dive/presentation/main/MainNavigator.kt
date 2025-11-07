@@ -15,6 +15,7 @@ import com.sopt.dive.presentation.search.navigation.navigateToSearch
 import com.sopt.dive.presentation.signin.navigation.SignIn
 import com.sopt.dive.presentation.signin.navigation.navigateToSignIn
 import com.sopt.dive.presentation.signup.navigation.navigateToSignUp
+import com.sopt.dive.presentation.splash.navigation.Splash
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
