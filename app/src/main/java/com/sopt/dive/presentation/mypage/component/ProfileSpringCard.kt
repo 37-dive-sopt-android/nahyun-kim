@@ -41,7 +41,7 @@ val dampingRatio = getDampingRatio(
 )
 
 @Composable
-fun ProfileCard(
+fun ProfileSpringCard(
     modifier: Modifier = Modifier,
     width: Dp = 180.dp,
     height: Dp = 250.dp
@@ -174,6 +174,6 @@ private fun getDampingRatio(
 @Composable
 private fun ProfileCardPreview() {
     DiveTheme {
-        ProfileCard()
+        ProfileSpringCard()
     }
 }

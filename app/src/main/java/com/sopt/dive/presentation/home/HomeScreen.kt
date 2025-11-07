@@ -9,7 +9,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -73,7 +72,7 @@ fun HomeScreen(
 
         itemsIndexed(
             items = friendList,
-            key = { _, friend -> friend.nickname }
+            key = { index, friend -> "${index}-${friend.nickname}" }
         ) { index, friend ->
             FriendCard(
                 order = index + 1,

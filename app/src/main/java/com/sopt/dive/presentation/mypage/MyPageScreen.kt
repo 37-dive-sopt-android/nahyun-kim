@@ -25,7 +25,7 @@ import com.sopt.dive.R
 import com.sopt.dive.core.designsystem.theme.DiveTheme
 import com.sopt.dive.data.local.UserPreferences
 import com.sopt.dive.domain.model.auth.UserInfo
-import com.sopt.dive.presentation.mypage.component.ProfileCard
+import com.sopt.dive.presentation.mypage.component.ProfileSpringCard
 
 @Composable
 fun MyPageRoute(
@@ -52,7 +52,7 @@ fun MypageScreen(
             .fillMaxSize()
             .padding(horizontal = 16.dp, vertical = 12.dp)
     ) {
-        ProfileCard()
+        ProfileSpringCard()
 
         Spacer(Modifier.height(20.dp))
 
