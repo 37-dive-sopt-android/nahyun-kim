@@ -16,6 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sopt.dive.R
 import com.sopt.dive.core.designsystem.theme.DiveTheme
@@ -33,11 +34,11 @@ fun HomeRoute(
     val context = LocalContext.current
 
     viewModel.setMyProfile(context)
-    val userInfo = viewModel.myProfile.collectAsState().value
+    val userInfo = viewModel.myProfile.collectAsStateWithLifecycle().value
 
     HomeScreen(
         myNickname = userInfo.nickname,
-        friendList = viewModel.friendProfile.collectAsState().value,
+        friendList = viewModel.friendProfile.collectAsStateWithLifecycle().value,
         modifier = Modifier.padding(paddingValues)
     )
 }
