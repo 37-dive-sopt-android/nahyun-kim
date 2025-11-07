@@ -38,7 +38,7 @@ fun SearchScreen(
             isFront = isFront,
             frontImageRes = R.drawable.img_profile_dummy,
             backImageRes = R.drawable.img_card_back,
-            onDismiss = { isFront = !isFront },
+            onClick = { isFront = !isFront },
             modifier = Modifier
                 .size(width = 250.dp, height = 375.dp)
                 .align(Alignment.Center)

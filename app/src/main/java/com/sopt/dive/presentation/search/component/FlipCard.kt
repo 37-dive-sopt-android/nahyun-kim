@@ -28,7 +28,7 @@ fun FlipCard(
     isFront: Boolean,
     frontImageRes: Int,
     backImageRes: Int,
-    onDismiss: () -> Unit,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val rotationY by animateFloatAsState(
@@ -48,7 +48,7 @@ fun FlipCard(
                 }
             }
             .clip(RoundedCornerShape(12.dp))
-            .noRippleClickable { onDismiss() }
+            .noRippleClickable { onClick() }
     ) {
         Image(
             painter = painterResource(
@@ -70,6 +70,6 @@ fun FlipCardInteractivePreview() {
         isFront = isFront,
         frontImageRes = R.drawable.img_profile_dummy,
         backImageRes = R.drawable.img_card_back,
-        onDismiss = { isFront = false }
+        onClick = { isFront = false }
     )
 }
