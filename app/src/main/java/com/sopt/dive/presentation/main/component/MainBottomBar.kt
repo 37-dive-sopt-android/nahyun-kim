@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -51,9 +52,12 @@ internal fun MainBottomBar(
     ) {
         Column(
             modifier = Modifier
-                .clip(CircleShape)
+                .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
                 .background(Color.White)
-                .border(BorderStroke(1.dp, Color.Gray), CircleShape)
+                .border(
+                    border = BorderStroke(1.dp, Color.Gray),
+                    shape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp)
+                )
         ) {
             HorizontalDivider(
                 color = Color.Gray,
