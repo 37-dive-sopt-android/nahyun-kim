@@ -31,6 +31,14 @@ import androidx.compose.ui.zIndex
 import com.sopt.dive.R
 import com.sopt.dive.core.designsystem.theme.DiveTheme
 import com.sopt.dive.core.util.noRippleClickable
+import kotlin.math.sqrt
+
+const val stiffness = 177.8f
+val dampingRatio = getDampingRatio(
+    damping = 20f,
+    stiffness = stiffness,
+    mass = 1f
+)
 
 @Composable
 fun ProfileCard(
@@ -63,7 +71,6 @@ private fun FrontImageCard(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-
     val transition = updateTransition(
         targetState = isFlipped,
         label = "frontTransition"
@@ -72,8 +79,8 @@ private fun FrontImageCard(
     val offset by transition.animateFloat(
         transitionSpec = {
             spring(
-                stiffness = 177.8f,
-                dampingRatio = 0.5f
+                stiffness = stiffness,
+                dampingRatio = dampingRatio
             )
         },
         label = "frontOffset"
@@ -84,8 +91,8 @@ private fun FrontImageCard(
     val rotation by transition.animateFloat(
         transitionSpec = {
             spring(
-                dampingRatio = 0.5f,
-                stiffness = 177.8f
+                stiffness = stiffness,
+                dampingRatio = dampingRatio,
             )
         }
     ) { flipped ->
@@ -156,6 +163,12 @@ private fun BackTextCard(
         )
     }
 }
+
+private fun getDampingRatio(
+    damping: Float,
+    stiffness: Float,
+    mass: Float
+) = damping / (2 * sqrt((stiffness * mass)))
 
 @Preview(showBackground = true)
 @Composable
