@@ -1,10 +1,14 @@
 package com.sopt.dive.presentation.mypage
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -43,75 +47,62 @@ fun MypageScreen(
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(20.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
             .fillMaxSize()
             .padding(horizontal = 16.dp, vertical = 12.dp)
     ) {
         ProfileCard()
 
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(10.dp)
-        ) {
-            Text(
-                text = stringResource(R.string.id_label),
-                fontSize = 32.sp,
-                fontWeight = FontWeight.Normal,
-            )
+        Spacer(Modifier.height(20.dp))
 
-            Text(
-                text = userInfo.id,
-                fontSize = 24.sp
-            )
-        }
+        UserInfoRow(
+            titleLabelRes = R.string.id_label,
+            infoText = userInfo.id,
+            modifier = Modifier.fillMaxWidth()
+        )
 
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(10.dp)
-        ) {
-            Text(
-                text = stringResource(R.string.password_label),
-                fontSize = 32.sp,
-                fontWeight = FontWeight.Normal,
-            )
+        UserInfoRow(
+            titleLabelRes = R.string.password_label,
+            infoText = userInfo.password,
+            modifier = Modifier.fillMaxWidth()
+        )
 
-            Text(
-                text = userInfo.password,
-                fontSize = 24.sp,
-            )
-        }
+        UserInfoRow(
+            titleLabelRes = R.string.nickname_label,
+            infoText = userInfo.nickname,
+            modifier = Modifier.fillMaxWidth()
+        )
 
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(10.dp)
-        ) {
-            Text(
-                text = stringResource(R.string.nickname_label),
-                fontSize = 32.sp,
-                fontWeight = FontWeight.Normal,
-            )
+        UserInfoRow(
+            titleLabelRes = R.string.mbti_label,
+            infoText = userInfo.mbti,
+            modifier = Modifier.fillMaxWidth()
+        )
+    }
+}
 
-            Text(
-                text = userInfo.nickname,
-                fontSize = 24.sp,
-            )
-        }
+@Composable
+private fun UserInfoRow(
+    @StringRes titleLabelRes: Int,
+    infoText: String,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            text = stringResource(titleLabelRes),
+            fontSize = 32.sp,
+            fontWeight = FontWeight.Normal,
+        )
 
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(10.dp)
-        ) {
-            Text(
-                text = stringResource(R.string.mbti_label),
-                fontSize = 32.sp,
-                fontWeight = FontWeight.Normal,
-            )
-
-            Text(
-                text = userInfo.mbti,
-                fontSize = 24.sp,
-            )
-        }
+        Text(
+            text = infoText,
+            fontSize = 24.sp,
+        )
     }
 }
 
