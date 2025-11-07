@@ -62,4 +62,5 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
 
     implementation(libs.kotlinx.immutable)
+    implementation(libs.androidx.lifecycle.viewmodel.compose.android)
 }
