@@ -14,18 +14,18 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 class HomeViewModel : ViewModel() {
-    private val _myProfileInfo = MutableStateFlow(UserInfo.Fake)
-    val myProfile: StateFlow<UserInfo> = _myProfileInfo.asStateFlow()
+    private val _myProfile = MutableStateFlow(UserInfo.Fake)
+    val myProfile: StateFlow<UserInfo> = _myProfile.asStateFlow()
 
-    private val _friendProfiles = MutableStateFlow(dummyFriendProfile)
+    private val _friendProfiles = MutableStateFlow(dummyFriendProfiles)
     val friendProfile: StateFlow<ImmutableList<FriendProfile>> = _friendProfiles
 
     fun setMyProfile(context: Context) { // TODO: 수정 필요
-        _myProfileInfo.value = UserPreferences(context).getUserInfo()
+        _myProfile.value = UserPreferences(context).getUserInfo()
     }
 
     companion object {
-        val dummyFriendProfile = persistentListOf(
+        val dummyFriendProfiles = persistentListOf(
             FriendProfile(
                 profileColor = Color.Blue,
                 nickname = "완두콩 3조",

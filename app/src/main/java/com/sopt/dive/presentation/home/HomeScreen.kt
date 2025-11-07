@@ -20,7 +20,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sopt.dive.R
 import com.sopt.dive.core.designsystem.theme.DiveTheme
 import com.sopt.dive.domain.model.friend.FriendProfile
-import com.sopt.dive.presentation.home.HomeViewModel.Companion.dummyFriendProfile
+import com.sopt.dive.presentation.home.HomeViewModel.Companion.dummyFriendProfiles
 import com.sopt.dive.presentation.home.component.FriendCard
 import com.sopt.dive.presentation.home.component.MyProfileCard
 import kotlinx.collections.immutable.ImmutableList
@@ -89,7 +89,7 @@ private fun HomeScreenPreview() {
     DiveTheme {
         HomeScreen(
             myNickname = "잠만보",
-            friendList = dummyFriendProfile
+            friendList = dummyFriendProfiles
         )
     }
 }
