@@ -1,4 +1,4 @@
-package com.sopt.dive.presentation.auth.util
+package com.sopt.dive.core.util
 
 object AuthValidator {
     private val idRegex = "[^a-zA-Z0-9가-힣]".toRegex()
