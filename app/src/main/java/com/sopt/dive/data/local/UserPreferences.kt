@@ -39,4 +39,10 @@ object UserPreferences {
     )
 
     fun isAutoLogin() = prefs.getBoolean(IS_LOGGED_IN_KEY, false)
+
+    fun logout() {
+        prefs.edit {
+            clear()
+        }
+    }
 }

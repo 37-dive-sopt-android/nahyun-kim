@@ -14,22 +14,31 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sopt.dive.R
 import com.sopt.dive.core.designsystem.theme.DiveTheme
+import com.sopt.dive.core.util.noRippleClickable
 import com.sopt.dive.data.local.UserPreferences
 import com.sopt.dive.domain.model.auth.UserInfo
 import com.sopt.dive.presentation.mypage.component.ProfileSpringCard
 
 @Composable
 fun MyPageRoute(
-    paddingValues: PaddingValues
+    paddingValues: PaddingValues,
+    navigateToSignIn: () -> Unit
 ) {
     MypageScreen(
+        onLogoutClick = {
+            UserPreferences.logout()
+            navigateToSignIn()
+        },
         userInfo = UserPreferences.getUserInfo(),
         modifier = Modifier.padding(paddingValues)
     )
@@ -38,6 +47,7 @@ fun MyPageRoute(
 @Composable
 fun MypageScreen(
     userInfo: UserInfo,
+    onLogoutClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -74,6 +84,13 @@ fun MypageScreen(
             infoText = userInfo.mbti,
             modifier = Modifier.fillMaxWidth()
         )
+
+        Spacer(Modifier.weight(1f))
+
+        LogoutButton(
+            onLogoutClick = onLogoutClick,
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+        )
     }
 }
 
@@ -101,11 +118,30 @@ private fun UserInfoRow(
     }
 }
 
+@Composable
+fun LogoutButton(
+    onLogoutClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Text(
+        text = stringResource(R.string.logout),
+        fontSize = 16.sp,
+        style = TextStyle(fontWeight = FontWeight.Medium),
+        textDecoration = TextDecoration.Underline,
+        color = Color.DarkGray,
+        modifier = modifier
+            .padding(5.dp)
+            .noRippleClickable(onClick = onLogoutClick)
+            .padding(top = 5.dp)
+    )
+}
+
 @Preview(showBackground = true)
 @Composable
 private fun MainScreenPreview() {
     DiveTheme {
         MypageScreen(
+            onLogoutClick = {},
             userInfo = UserInfo(
                 id = "nahyun",
                 password = "password",
