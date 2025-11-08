@@ -11,10 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,54 +22,44 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sopt.dive.R
 import com.sopt.dive.core.designsystem.component.DiveBasicButton
 import com.sopt.dive.core.designsystem.theme.DiveTheme
 import com.sopt.dive.core.ui.component.textfield.LabelTextField
 import com.sopt.dive.core.ui.component.textfield.PasswordTextField
 import com.sopt.dive.core.util.noRippleClickable
-import com.sopt.dive.data.local.UserPreferences
-import com.sopt.dive.presentation.signin.navigation.SignIn
+import com.sopt.dive.domain.model.auth.LoginResult
 
 @Composable
 fun SignInRoute(
     paddingValues: PaddingValues,
-    registerUserInfo: SignIn?,
     navigateToMain: () -> Unit,
-    navigateToSignUp: () -> Unit
+    navigateToSignUp: () -> Unit,
+    viewModel: SignInViewModel = viewModel()
 ) {
     val context = LocalContext.current
 
-    var id by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+    val id = viewModel.id.collectAsStateWithLifecycle().value
+    val password = viewModel.password.collectAsStateWithLifecycle().value
 
     SignInScreen(
         modifier = Modifier.padding(paddingValues),
         id = id,
         password = password,
-        onIdChange = { id = it },
-        onPasswordChange = { password = it },
+        onIdChange = viewModel::onIdChange,
+        onPasswordChange = viewModel::onPasswordChange,
         onLoginClick = {
-            if (id.isBlank() || password.isBlank()) {
-                Toast.makeText(context, "아이디 또는 비밀번호를 입력해주세요.", Toast.LENGTH_SHORT).show()
-                return@SignInScreen
-            }
+            val loginResult = viewModel.validateLogin()
 
-            if (registerUserInfo == null) {
-                Toast.makeText(context, "회원가입 정보가 없습니다.", Toast.LENGTH_SHORT).show()
-                return@SignInScreen
-            }
-
-            if (registerUserInfo.id == id && registerUserInfo.password == password) {
-                UserPreferences.saveUserInfo(
-                    id = id,
-                    password = password,
-                    nickname = registerUserInfo.nickname,
-                    mbti = registerUserInfo.mbti
-                )
-                navigateToMain()
-            } else {
-                Toast.makeText(context, "아이디 또는 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show()
+            when (loginResult) {
+                is LoginResult.Success -> {
+                    navigateToMain()
+                }
+                is LoginResult.Failure -> {
+                    Toast.makeText(context, loginResult.errorType.errorMessage, Toast.LENGTH_SHORT).show()
+                }
             }
         },
         onSignUpClick = navigateToSignUp

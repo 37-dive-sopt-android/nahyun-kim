@@ -36,7 +36,6 @@ fun NavGraphBuilder.signInNavGraph(
     composable<SignIn> { backStackEntry ->
         SignInRoute(
             paddingValues = paddingValues,
-            registerUserInfo = backStackEntry.toRoute<SignIn>(),
             navigateToMain = navigateToMain,
             navigateToSignUp = navigateToSignUp,
         )

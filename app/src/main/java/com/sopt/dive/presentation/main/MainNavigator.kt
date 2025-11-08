@@ -8,14 +8,12 @@ import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
-import com.sopt.dive.presentation.home.navigation.Home
 import com.sopt.dive.presentation.home.navigation.navigateToHome
 import com.sopt.dive.presentation.mypage.navigation.navigateToMyPage
 import com.sopt.dive.presentation.search.navigation.navigateToSearch
 import com.sopt.dive.presentation.signin.navigation.SignIn
 import com.sopt.dive.presentation.signin.navigation.navigateToSignIn
 import com.sopt.dive.presentation.signup.navigation.navigateToSignUp
-import com.sopt.dive.presentation.splash.navigation.Splash
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -27,7 +25,7 @@ class MainNavigator(
     val navController: NavHostController,
     coroutineScope: CoroutineScope,
 ) {
-    val startDestination = Home
+    val startDestination = SignIn()
 
     private val currentDestination = navController.currentBackStackEntryFlow
         .map { it.destination }
