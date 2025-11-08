@@ -1,6 +1,5 @@
 package com.sopt.dive.presentation.home
 
-import android.content.Context
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import com.sopt.dive.data.local.UserPreferences
@@ -20,8 +19,12 @@ class HomeViewModel : ViewModel() {
     private val _friendProfiles = MutableStateFlow(dummyFriendProfiles)
     val friendProfile: StateFlow<ImmutableList<FriendProfile>> = _friendProfiles
 
-    fun setMyProfile(context: Context) { // TODO: hilt 의존성 주입 후 수정
-        _myProfile.value = UserPreferences(context).getUserInfo()
+    init {
+        loadMyProfileInfo()
+    }
+
+    fun loadMyProfileInfo() {
+        _myProfile.value = UserPreferences.getUserInfo()
     }
 
     companion object {

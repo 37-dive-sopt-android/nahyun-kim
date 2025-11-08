@@ -43,7 +43,6 @@ fun SignInRoute(
     navigateToSignUp: () -> Unit
 ) {
     val context = LocalContext.current
-    val userPreferences = remember { UserPreferences(context) }
 
     var id by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -66,7 +65,7 @@ fun SignInRoute(
             }
 
             if (registerUserInfo.id == id && registerUserInfo.password == password) {
-                userPreferences.saveUserInfo(
+                UserPreferences.saveUserInfo(
                     id = id,
                     password = password,
                     nickname = registerUserInfo.nickname,

@@ -30,9 +30,6 @@ fun HomeRoute(
     paddingValues: PaddingValues,
     viewModel: HomeViewModel = viewModel()
 ) {
-    val context = LocalContext.current
-
-    viewModel.setMyProfile(context)
     val userInfo = viewModel.myProfile.collectAsStateWithLifecycle().value
 
     HomeScreen(
