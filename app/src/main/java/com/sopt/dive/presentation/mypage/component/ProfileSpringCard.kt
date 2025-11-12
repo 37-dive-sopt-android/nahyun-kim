@@ -1,5 +1,6 @@
 package com.sopt.dive.presentation.mypage.component
 
+import androidx.annotation.DrawableRes
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.updateTransition
@@ -42,6 +43,8 @@ private val dampingRatio = getDampingRatio(
 
 @Composable
 fun ProfileSpringCard(
+    @DrawableRes frontImageRes: Int,
+    backText: String,
     modifier: Modifier = Modifier,
     width: Dp = 180.dp,
     height: Dp = 250.dp
@@ -54,11 +57,13 @@ fun ProfileSpringCard(
     ) {
         BackTextCard(
             isFlipped = isFlipped,
+            text = backText,
             modifier = Modifier.size(width = width, height = height)
         )
 
         FrontImageCard(
             isFlipped = isFlipped,
+            imageRes = frontImageRes,
             onClick = { isFlipped = !isFlipped },
             modifier = Modifier.size(width = width, height = height)
         )
@@ -68,6 +73,7 @@ fun ProfileSpringCard(
 @Composable
 private fun FrontImageCard(
     isFlipped: Boolean,
+    @DrawableRes imageRes: Int,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -100,7 +106,7 @@ private fun FrontImageCard(
     }
 
     Image(
-        painter = painterResource(R.drawable.img_profile_dummy),
+        painter = painterResource(imageRes),
         contentDescription = null,
         contentScale = ContentScale.Crop,
         modifier = modifier
@@ -124,6 +130,7 @@ private fun FrontImageCard(
 @Composable
 private fun BackTextCard(
     isFlipped: Boolean,
+    text: String,
     modifier: Modifier = Modifier,
 ) {
     val transition = updateTransition(
@@ -152,7 +159,7 @@ private fun BackTextCard(
             .padding(20.dp)
     ) {
         Text(
-            text = "안녕하세요?\n완두콩입니다\n콩콩콩",
+            text = text,
             textAlign = TextAlign.Center,
             color = Color.White,
             modifier = Modifier
@@ -174,6 +181,9 @@ private fun getDampingRatio(
 @Composable
 private fun ProfileCardPreview() {
     DiveTheme {
-        ProfileSpringCard()
+        ProfileSpringCard(
+            frontImageRes = R.drawable.img_profile_dummy,
+            backText = "안녕하세요?\n완두콩입니다\n콩콩콩"
+        )
     }
 }

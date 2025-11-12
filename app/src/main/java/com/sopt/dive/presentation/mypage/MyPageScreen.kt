@@ -57,7 +57,10 @@ private fun MypageScreen(
             .fillMaxSize()
             .padding(horizontal = 16.dp, vertical = 12.dp)
     ) {
-        ProfileSpringCard()
+        ProfileSpringCard(
+            frontImageRes = R.drawable.img_profile_dummy,
+            backText = "안녕하세요?\n완두콩입니다\n콩콩콩"
+        )
 
         Spacer(Modifier.height(20.dp))
 
