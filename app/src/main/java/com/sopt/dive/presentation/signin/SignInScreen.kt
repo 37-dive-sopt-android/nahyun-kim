@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -41,8 +42,8 @@ fun SignInRoute(
 ) {
     val context = LocalContext.current
 
-    val id = viewModel.id.collectAsStateWithLifecycle().value
-    val password = viewModel.password.collectAsStateWithLifecycle().value
+    val id by viewModel.id.collectAsStateWithLifecycle()
+    val password by viewModel.password.collectAsStateWithLifecycle()
 
     SignInScreen(
         modifier = Modifier.padding(paddingValues),

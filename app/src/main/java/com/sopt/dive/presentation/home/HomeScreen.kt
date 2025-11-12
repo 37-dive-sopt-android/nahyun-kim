@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -30,11 +31,13 @@ fun HomeRoute(
     paddingValues: PaddingValues,
     viewModel: HomeViewModel = viewModel()
 ) {
-    val userInfo = viewModel.myProfile.collectAsStateWithLifecycle().value
+    val userInfo by viewModel.myProfile.collectAsStateWithLifecycle()
+    val friendList by viewModel.friendProfile.collectAsStateWithLifecycle()
+
 
     HomeScreen(
         myNickname = userInfo.nickname,
-        friendList = viewModel.friendProfile.collectAsStateWithLifecycle().value,
+        friendList = friendList,
         modifier = Modifier.padding(paddingValues)
     )
 }

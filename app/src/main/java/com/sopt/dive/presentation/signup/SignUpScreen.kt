@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -42,7 +43,7 @@ fun SignUpRoute(
     viewModel: SignUpViewModel = viewModel()
 ) {
     val context = LocalContext.current
-    val userInfo = viewModel.userInfo.collectAsStateWithLifecycle().value
+    val userInfo by viewModel.userInfo.collectAsStateWithLifecycle()
 
     SignUpScreen(
         modifier = Modifier.padding(paddingValues),
