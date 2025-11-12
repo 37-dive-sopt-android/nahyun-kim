@@ -1,8 +1,8 @@
 package com.sopt.dive.domain.model.auth
 
-sealed class LoginResult() {
-    data object Success : LoginResult()
-    data class Failure(val errorType: LoginError) : LoginResult()
+sealed interface LoginResult {
+    data object Success : LoginResult
+    data class Failure(val errorType: LoginError) : LoginResult
 }
 
 enum class LoginError(

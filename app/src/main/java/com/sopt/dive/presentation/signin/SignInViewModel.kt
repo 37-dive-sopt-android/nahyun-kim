@@ -30,7 +30,7 @@ class SignInViewModel(
         _password.update { password }
     }
 
-    fun validateLogin(): LoginResult {
+    fun getLoginResult(): LoginResult {
         val idValue = id.value
         val pwValue = password.value
 
@@ -44,7 +44,6 @@ class SignInViewModel(
             }
 
             idValue == registerUserInfo.id && pwValue == registerUserInfo.password -> { // 로그인 성공
-                saveUserInfo()
                 LoginResult.Success
             }
 
@@ -54,7 +53,7 @@ class SignInViewModel(
         }
     }
 
-    private fun saveUserInfo() {
+    fun saveUserInfo() {
         UserPreferences.saveUserInfo(
             id = id.value,
             password = password.value,

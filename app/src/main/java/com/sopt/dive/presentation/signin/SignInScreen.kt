@@ -52,10 +52,11 @@ fun SignInRoute(
         onIdChange = viewModel::onIdChange,
         onPasswordChange = viewModel::onPasswordChange,
         onLoginClick = {
-            val loginResult = viewModel.validateLogin()
+            val loginResult = viewModel.getLoginResult()
 
             when (loginResult) {
                 is LoginResult.Success -> {
+                    viewModel.saveUserInfo()
                     navigateToMain()
                 }
                 is LoginResult.Failure -> {
