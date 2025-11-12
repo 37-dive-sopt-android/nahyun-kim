@@ -40,7 +40,7 @@ fun HomeRoute(
 }
 
 @Composable
-fun HomeScreen(
+private fun HomeScreen(
     myNickname: String,
     friendList: ImmutableList<FriendProfile>,
     modifier: Modifier = Modifier

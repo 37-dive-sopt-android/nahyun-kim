@@ -33,8 +33,8 @@ import com.sopt.dive.core.designsystem.theme.DiveTheme
 import com.sopt.dive.core.util.noRippleClickable
 import kotlin.math.sqrt
 
-const val stiffness = 177.8f
-val dampingRatio = getDampingRatio(
+private const val stiffness = 177.8f
+private val dampingRatio = getDampingRatio(
     damping = 20f,
     stiffness = stiffness,
     mass = 1f

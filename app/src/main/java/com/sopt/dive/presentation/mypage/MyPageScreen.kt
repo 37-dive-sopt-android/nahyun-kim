@@ -45,7 +45,7 @@ fun MyPageRoute(
 }
 
 @Composable
-fun MypageScreen(
+private fun MypageScreen(
     userInfo: UserInfo,
     onLogoutClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -119,7 +119,7 @@ private fun UserInfoRow(
 }
 
 @Composable
-fun LogoutButton(
+private fun LogoutButton(
     onLogoutClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
