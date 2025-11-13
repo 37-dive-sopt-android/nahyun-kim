@@ -7,9 +7,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.sopt.dive.data.local.UserPreferences
+import androidx.compose.ui.platform.LocalContext
+import com.sopt.dive.DiveApplication
 import kotlinx.coroutines.delay
 
 @Composable
@@ -18,10 +20,13 @@ fun SplashRoute(
     navigateToAuth: () -> Unit,
     navigateToHome: () -> Unit,
 ) {
+    val app = LocalContext.current.applicationContext as DiveApplication
+    val userPrefs = remember { app.appContainer.userPreferences }
+
     LaunchedEffect(Unit) {
         delay(500L)
 
-        if (UserPreferences.isAutoLogin()) {
+        if (userPrefs.isAutoLogin()) {
             navigateToHome()
         } else {
             navigateToAuth()

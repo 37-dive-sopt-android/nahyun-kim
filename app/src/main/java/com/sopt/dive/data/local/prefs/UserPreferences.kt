@@ -1,24 +1,18 @@
-package com.sopt.dive.data.local
+package com.sopt.dive.data.local.prefs
 
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.sopt.dive.domain.model.auth.UserInfo
 
+private const val USER_ID_KEY = "user_id"
+private const val USER_PASSWORD_KEY = "user_password"
+private const val USER_NICKNAME_KEY = "user_nickname"
+private const val USER_MBTI_KEY = "user_mbti"
+private const val IS_LOGGED_IN_KEY = "auto_login"
+
 //TODO: hilt 사용
-object UserPreferences {
-    private const val SPF_KEY = "spf_key"
-    private const val USER_ID_KEY = "user_id"
-    private const val USER_PASSWORD_KEY = "user_password"
-    private const val USER_NICKNAME_KEY = "user_nickname"
-    private const val USER_MBTI_KEY = "user_mbti"
-    private const val IS_LOGGED_IN_KEY = "auto_login"
-
-    private lateinit var prefs: SharedPreferences
-
-    fun init(context: Context) {
-        prefs = context.applicationContext.getSharedPreferences(SPF_KEY, Context.MODE_PRIVATE)
-    }
+class UserPreferences(private val prefs: SharedPreferences) {
 
     fun saveUserInfo(id: String, password: String, nickname: String, mbti: String) {
         prefs.edit {

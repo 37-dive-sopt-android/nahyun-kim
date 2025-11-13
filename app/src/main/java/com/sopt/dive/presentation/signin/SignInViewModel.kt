@@ -2,8 +2,13 @@ package com.sopt.dive.presentation.signin
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.createSavedStateHandle
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.toRoute
-import com.sopt.dive.data.local.UserPreferences
+import com.sopt.dive.DiveApplication
+import com.sopt.dive.data.local.prefs.UserPreferences
 import com.sopt.dive.domain.model.auth.LoginError
 import com.sopt.dive.domain.model.auth.LoginResult
 import com.sopt.dive.presentation.signin.navigation.SignIn
@@ -12,7 +17,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 
 class SignInViewModel(
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
+    private val userPrefs: UserPreferences
 ) : ViewModel() {
     val registerUserInfo = savedStateHandle.toRoute<SignIn>()
 
@@ -54,11 +60,22 @@ class SignInViewModel(
     }
 
     fun saveUserInfo() {
-        UserPreferences.saveUserInfo(
+        userPrefs.saveUserInfo(
             id = id.value,
             password = password.value,
             nickname = registerUserInfo.nickname,
             mbti = registerUserInfo.mbti
         )
+    }
+
+    companion object {
+        fun provideFactory(app: DiveApplication): ViewModelProvider.Factory =
+            viewModelFactory {
+                initializer {
+                    val saved = createSavedStateHandle()
+                    val prefs = app.appContainer.userPreferences
+                    SignInViewModel(saved, prefs)
+                }
+            }
     }
 }

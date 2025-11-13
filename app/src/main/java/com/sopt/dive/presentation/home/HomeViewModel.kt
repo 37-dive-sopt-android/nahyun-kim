@@ -2,17 +2,25 @@ package com.sopt.dive.presentation.home
 
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
-import com.sopt.dive.data.local.UserPreferences
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.createSavedStateHandle
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
+import com.sopt.dive.DiveApplication
+import com.sopt.dive.data.local.prefs.UserPreferences
 import com.sopt.dive.domain.model.auth.UserInfo
 import com.sopt.dive.domain.model.friend.FriendProfile
 import com.sopt.dive.domain.model.friend.ProfileTag
+import com.sopt.dive.presentation.signin.SignInViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(
+    private val userPrefs: UserPreferences
+) : ViewModel() {
     private val _myProfile = MutableStateFlow(UserInfo.Fake)
     val myProfile: StateFlow<UserInfo> = _myProfile.asStateFlow()
 
@@ -24,10 +32,18 @@ class HomeViewModel : ViewModel() {
     }
 
     fun loadMyProfileInfo() {
-        _myProfile.value = UserPreferences.getUserInfo()
+        _myProfile.value = userPrefs.getUserInfo()
     }
 
     companion object {
+        fun provideFactory(app: DiveApplication): ViewModelProvider.Factory =
+            viewModelFactory {
+                initializer {
+                    val prefs = app.appContainer.userPreferences
+                    HomeViewModel(prefs)
+                }
+            }
+
         val dummyFriendProfiles = persistentListOf(
             FriendProfile(
                 profileColor = Color.Blue,

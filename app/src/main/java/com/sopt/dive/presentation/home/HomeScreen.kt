@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.sopt.dive.DiveApplication
 import com.sopt.dive.R
 import com.sopt.dive.core.designsystem.theme.DiveTheme
 import com.sopt.dive.domain.model.friend.FriendProfile
@@ -29,11 +30,16 @@ import kotlinx.collections.immutable.ImmutableList
 @Composable
 fun HomeRoute(
     paddingValues: PaddingValues,
-    viewModel: HomeViewModel = viewModel()
 ) {
+    val context = LocalContext.current
+    val app = context.applicationContext as DiveApplication
+
+    val viewModel: HomeViewModel = viewModel(
+        factory = HomeViewModel.provideFactory(app)
+    )
+
     val userInfo by viewModel.myProfile.collectAsStateWithLifecycle()
     val friendList by viewModel.friendProfile.collectAsStateWithLifecycle()
-
 
     HomeScreen(
         myNickname = userInfo.nickname,

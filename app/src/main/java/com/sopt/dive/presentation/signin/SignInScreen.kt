@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.sopt.dive.DiveApplication
 import com.sopt.dive.R
 import com.sopt.dive.core.designsystem.component.DiveBasicButton
 import com.sopt.dive.core.designsystem.theme.DiveTheme
@@ -37,10 +38,14 @@ import com.sopt.dive.domain.model.auth.LoginResult
 fun SignInRoute(
     paddingValues: PaddingValues,
     navigateToMain: () -> Unit,
-    navigateToSignUp: () -> Unit,
-    viewModel: SignInViewModel = viewModel()
+    navigateToSignUp: () -> Unit
 ) {
     val context = LocalContext.current
+    val app = context.applicationContext as DiveApplication
+
+    val viewModel: SignInViewModel = viewModel(
+        factory = SignInViewModel.provideFactory(app)
+    )
 
     val id by viewModel.id.collectAsStateWithLifecycle()
     val password by viewModel.password.collectAsStateWithLifecycle()
