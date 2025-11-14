@@ -8,6 +8,7 @@ import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import com.sopt.dive.presentation.home.navigation.Home
 import com.sopt.dive.presentation.home.navigation.navigateToHome
 import com.sopt.dive.presentation.mypage.navigation.navigateToMyPage
 import com.sopt.dive.presentation.search.navigation.navigateToSearch
@@ -25,7 +26,7 @@ class MainNavigator(
     val navController: NavHostController,
     coroutineScope: CoroutineScope,
 ) {
-    val startDestination = SignIn
+    val startDestination = Home
 
     private val currentDestination = navController.currentBackStackEntryFlow
         .map { it.destination }

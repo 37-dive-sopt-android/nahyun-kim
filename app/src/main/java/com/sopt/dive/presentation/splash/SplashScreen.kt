@@ -21,16 +21,16 @@ fun SplashRoute(
     navigateToHome: () -> Unit,
 ) {
     val app = LocalContext.current.applicationContext as DiveApplication
-    val userPrefs = remember { app.appContainer.userPreferences }
+//    val userPrefs = remember { app.appContainer.userPreferences }
 
     LaunchedEffect(Unit) {
         delay(500L)
 
-        if (userPrefs.isAutoLogin()) {
-            navigateToHome()
-        } else {
-            navigateToAuth()
-        }
+//        if (userPrefs.isAutoLogin()) {
+//            navigateToHome()
+//        } else {
+//            navigateToAuth()
+//        }
     }
 
     SplashScreen(

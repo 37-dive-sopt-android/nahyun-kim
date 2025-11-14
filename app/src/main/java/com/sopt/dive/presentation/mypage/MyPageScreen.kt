@@ -12,7 +12,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -37,16 +41,28 @@ fun MyPageRoute(
     navigateToSignIn: () -> Unit
 ) {
     val app = LocalContext.current.applicationContext as DiveApplication
-    val userPrefs = remember { app.appContainer.userPreferences }
+    val repository = remember { app.appContainer.userRepository }
 
-    MypageScreen(
-        onLogoutClick = {
-            userPrefs.logout()
-            navigateToSignIn()
-        },
-        userInfoModel = userPrefs.getUserInfo(),
-        modifier = Modifier.padding(paddingValues)
-    )
+    var user by remember { mutableStateOf<UserInfoModel?>(null) }
+
+    LaunchedEffect(repository) {
+        repository.getMyProfile()
+            .onSuccess { user = it }
+            .onFailure {
+                navigateToSignIn()
+            }
+    }
+
+    user?.let { model ->
+        MypageScreen(
+            modifier = Modifier.padding(paddingValues),
+            userInfoModel = model,
+            onLogoutClick = {
+                //TODO: 로그아웃
+                navigateToSignIn()
+            }
+        )
+    }
 }
 
 @Composable
@@ -76,14 +92,14 @@ private fun MypageScreen(
         )
 
         UserInfoRow(
-            titleLabelRes = R.string.password_label,
-            infoText = userInfoModel.password,
+            titleLabelRes = R.string.name_label,
+            infoText = userInfoModel.name,
             modifier = Modifier.fillMaxWidth()
         )
 
         UserInfoRow(
-            titleLabelRes = R.string.name_label,
-            infoText = userInfoModel.nickname,
+            titleLabelRes = R.string.email_label,
+            infoText = userInfoModel.email,
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -152,8 +168,7 @@ private fun MainScreenPreview() {
             onLogoutClick = {},
             userInfoModel = UserInfoModel(
                 id = "nahyun",
-                password = "password",
-                nickname = "작나",
+                name = "작나",
                 email = "user@gmail.com",
                 age = 23
             )
