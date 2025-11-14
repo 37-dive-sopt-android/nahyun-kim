@@ -6,10 +6,12 @@
     <string name="id_hint">아이디를 입력해주세요</string>
     <string name="password_label">PW</string>
     <string name="password_hint">비밀번호를 입력해주세요</string>
-    <string name="nickname_label">NICKNAME</string>
-    <string name="nickname_hint">닉네임을 입력해주세요</string>
-    <string name="mbti_label">MBTI</string>
-    <string name="mbti_hint">MBTI를 입력해주세요</string>
+    <string name="name_label">NAME</string>
+    <string name="name_hint">이름을 입력해주세요</string>
+    <string name="email_label">EMAIL</string>
+    <string name="email_hint">이메일을 입력해주세요</string>
+    <string name="age_label">AGE</string>
+    <string name="age_hint">나이를 입력해주세요</string>
     <string name="do_signup">회원가입하기</string>
 
     <!-- login -->

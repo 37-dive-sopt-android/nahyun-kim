@@ -10,19 +10,13 @@ import com.sopt.dive.presentation.signin.SignInRoute
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class SignIn(
-    val id: String = "",
-    val password: String = "",
-    val nickname: String = "",
-    val mbti: String = ""
-) : Route
+data object SignIn: Route
 
 fun NavController.navigateToSignIn(
-    registerInfo: SignIn?,
     navOptions: NavOptions? = null
 ) {
     navigate(
-        route = registerInfo ?: SignIn(),
+        route = SignIn,
         navOptions = navOptions
     )
 }

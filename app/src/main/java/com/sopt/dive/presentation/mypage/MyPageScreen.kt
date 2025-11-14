@@ -12,9 +12,15 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -22,11 +28,11 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.sopt.dive.DiveApplication
 import com.sopt.dive.R
 import com.sopt.dive.core.designsystem.theme.DiveTheme
 import com.sopt.dive.core.util.noRippleClickable
-import com.sopt.dive.data.local.UserPreferences
-import com.sopt.dive.domain.model.auth.UserInfo
+import com.sopt.dive.domain.model.auth.UserInfoModel
 import com.sopt.dive.presentation.mypage.component.ProfileSpringCard
 
 @Composable
@@ -34,19 +40,34 @@ fun MyPageRoute(
     paddingValues: PaddingValues,
     navigateToSignIn: () -> Unit
 ) {
-    MypageScreen(
-        onLogoutClick = {
-            UserPreferences.logout()
-            navigateToSignIn()
-        },
-        userInfo = UserPreferences.getUserInfo(),
-        modifier = Modifier.padding(paddingValues)
-    )
+    val app = LocalContext.current.applicationContext as DiveApplication
+    val repository = remember { app.appContainer.userRepository }
+
+    var user by remember { mutableStateOf<UserInfoModel?>(null) }
+
+    LaunchedEffect(repository) {
+        repository.getMyProfile()
+            .onSuccess { user = it }
+            .onFailure {
+                navigateToSignIn()
+            }
+    }
+
+    user?.let { model ->
+        MypageScreen(
+            modifier = Modifier.padding(paddingValues),
+            userInfoModel = model,
+            onLogoutClick = {
+                //TODO: 로그아웃
+                navigateToSignIn()
+            }
+        )
+    }
 }
 
 @Composable
 private fun MypageScreen(
-    userInfo: UserInfo,
+    userInfoModel: UserInfoModel,
     onLogoutClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -66,25 +87,25 @@ private fun MypageScreen(
 
         UserInfoRow(
             titleLabelRes = R.string.id_label,
-            infoText = userInfo.id,
+            infoText = userInfoModel.id,
             modifier = Modifier.fillMaxWidth()
         )
 
         UserInfoRow(
-            titleLabelRes = R.string.password_label,
-            infoText = userInfo.password,
+            titleLabelRes = R.string.name_label,
+            infoText = userInfoModel.name,
             modifier = Modifier.fillMaxWidth()
         )
 
         UserInfoRow(
-            titleLabelRes = R.string.nickname_label,
-            infoText = userInfo.nickname,
+            titleLabelRes = R.string.email_label,
+            infoText = userInfoModel.email,
             modifier = Modifier.fillMaxWidth()
         )
 
         UserInfoRow(
-            titleLabelRes = R.string.mbti_label,
-            infoText = userInfo.mbti,
+            titleLabelRes = R.string.age_label,
+            infoText = "${userInfoModel.age}",
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -145,12 +166,12 @@ private fun MainScreenPreview() {
     DiveTheme {
         MypageScreen(
             onLogoutClick = {},
-            userInfo = UserInfo(
+            userInfoModel = UserInfoModel(
                 id = "nahyun",
-                password = "password",
-                nickname = "작나",
-                mbti = "ESTP"
-            ),
+                name = "작나",
+                email = "user@gmail.com",
+                age = 23
+            )
         )
     }
 }
