@@ -23,10 +23,12 @@ fun NavController.navigateToMyPage(
 
 fun NavGraphBuilder.myPageNavGraph(
     paddingValues: PaddingValues,
+    navigateToSignIn: () -> Unit
 ) {
-    composable<MyPage> { backStackEntry ->
+    composable<MyPage> {
         MyPageRoute(
-            paddingValues = paddingValues
+            paddingValues = paddingValues,
+            navigateToSignIn = navigateToSignIn
         )
     }
 }

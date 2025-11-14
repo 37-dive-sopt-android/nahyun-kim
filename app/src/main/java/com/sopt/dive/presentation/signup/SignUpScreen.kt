@@ -14,9 +14,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -29,11 +26,12 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sopt.dive.R
 import com.sopt.dive.core.designsystem.component.DiveBasicButton
 import com.sopt.dive.core.designsystem.theme.DiveTheme
 import com.sopt.dive.core.ui.component.textfield.ErrorLabelTextField
-import com.sopt.dive.core.util.AuthValidator
 import com.sopt.dive.domain.model.auth.RegisterError
 import com.sopt.dive.presentation.signin.navigation.SignIn
 
@@ -41,30 +39,30 @@ import com.sopt.dive.presentation.signin.navigation.SignIn
 @Composable
 fun SignUpRoute(
     paddingValues: PaddingValues,
-    navigateToSignIn: (SignIn) -> Unit
+    navigateToSignIn: (SignIn) -> Unit,
+    viewModel: SignUpViewModel = viewModel()
 ) {
-    var id by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var nickname by remember { mutableStateOf("") }
-    var mbti by remember { mutableStateOf("") }
-
-    val context = LocalContext.current 
+    val context = LocalContext.current
+    val userInfo by viewModel.userInfo.collectAsStateWithLifecycle()
 
     SignUpScreen(
         modifier = Modifier.padding(paddingValues),
-        id = id,
-        password = password,
-        nickname = nickname,
-        mbti = mbti,
-        onIdChange = { id = it },
-        onPasswordChange = { password = it },
-        onNicknameChange = { nickname = it },
-        onMbtiChange = { mbti = it },
+        id = userInfo.id,
+        password = userInfo.password,
+        nickname = userInfo.nickname,
+        mbti = userInfo.mbti,
+        onIdChange = viewModel::onIdChange,
+        onPasswordChange = viewModel::onPasswordChange,
+        onNicknameChange = viewModel::onNicknameChange,
+        onMbtiChange = viewModel::onMbtiChange,
         onSignUpClick = {
-            if (with(AuthValidator) {
-                    validateId(id) && validatePassword(password) && validateNickname(nickname) && validateMbti(mbti)
-                }) {
-                navigateToSignIn(SignIn(id, password, nickname, mbti))
+            if (viewModel.isValid()) {
+                navigateToSignIn(SignIn(
+                    id = userInfo.id,
+                    password = userInfo.password,
+                    nickname = userInfo.nickname,
+                    mbti = userInfo.mbti
+                ))
             } else {
                 Toast.makeText(context, "모든 정보를 정확히 입력해세요.", Toast.LENGTH_SHORT).show()
             }

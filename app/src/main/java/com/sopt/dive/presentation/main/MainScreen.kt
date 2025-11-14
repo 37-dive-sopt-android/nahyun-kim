@@ -51,6 +51,7 @@ fun MainScreen(
 
             myPageNavGraph(
                 paddingValues = paddingValues,
+                navigateToSignIn = navigator::navigateToSignIn
             )
 
             signInNavGraph(

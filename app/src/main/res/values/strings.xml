@@ -16,4 +16,6 @@
     <string name="auth_welcome">Welcome To SOPT</string>
     <!-- signup -->
     <string name="sign_up_title">SIGN UP</string>
+    <!-- my -->
+    <string name="logout">로그아웃</string>
 </resources>

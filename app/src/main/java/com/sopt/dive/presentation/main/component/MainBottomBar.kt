@@ -16,8 +16,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -51,14 +50,13 @@ internal fun MainBottomBar(
     ) {
         Column(
             modifier = Modifier
-                .clip(CircleShape)
+                .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
                 .background(Color.White)
-                .border(BorderStroke(1.dp, Color.Gray), CircleShape)
+                .border(
+                    border = BorderStroke(1.dp, Color.Gray),
+                    shape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp)
+                )
         ) {
-            HorizontalDivider(
-                color = Color.Gray,
-                thickness = 1.dp
-            )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceAround,

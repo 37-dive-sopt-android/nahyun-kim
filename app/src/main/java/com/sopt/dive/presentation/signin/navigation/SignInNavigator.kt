@@ -5,7 +5,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import androidx.navigation.toRoute
 import com.sopt.dive.core.navigation.Route
 import com.sopt.dive.presentation.signin.SignInRoute
 import kotlinx.serialization.Serializable
@@ -36,7 +35,6 @@ fun NavGraphBuilder.signInNavGraph(
     composable<SignIn> { backStackEntry ->
         SignInRoute(
             paddingValues = paddingValues,
-            registerUserInfo = backStackEntry.toRoute<SignIn>(),
             navigateToMain = navigateToMain,
             navigateToSignUp = navigateToSignUp,
         )

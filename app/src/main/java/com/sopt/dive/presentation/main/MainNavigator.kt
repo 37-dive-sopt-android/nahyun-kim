@@ -94,10 +94,15 @@ class MainNavigator(
     }
 
     fun navigateToSignIn(
-        registerInfo: SignIn?
+        registerInfo: SignIn? = null
     ) {
         navController.navigateToSignIn(
-            registerInfo = registerInfo
+            registerInfo = registerInfo,
+            navOptions = navOptions {
+                popUpTo(navController.graph.id) {
+                    inclusive = true
+                }
+            }
         )
     }
 
