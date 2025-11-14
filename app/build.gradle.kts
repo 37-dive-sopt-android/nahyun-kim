@@ -63,4 +63,9 @@ dependencies {
 
     implementation(libs.kotlinx.immutable)
     implementation(libs.androidx.lifecycle.viewmodel.compose.android)
+
+    // Networking
+    implementation(libs.retrofit.core)
+    implementation(libs.retrofit.kotlin.serialization)
+    implementation(libs.okhttp.logging)
 }
