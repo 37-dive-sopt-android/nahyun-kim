@@ -1,16 +1,13 @@
 package com.sopt.dive.presentation.signup
 
 import android.widget.Toast
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -21,10 +18,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -34,8 +27,8 @@ import com.sopt.dive.DiveApplication
 import com.sopt.dive.R
 import com.sopt.dive.core.designsystem.component.DiveBasicButton
 import com.sopt.dive.core.designsystem.theme.DiveTheme
-import com.sopt.dive.core.ui.component.textfield.ErrorLabelTextField
 import com.sopt.dive.domain.model.auth.RegisterError
+import com.sopt.dive.presentation.signup.component.SignUpFormTextField
 
 
 @Composable
@@ -110,101 +103,65 @@ private fun SignUpScreen(
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
 
-        Spacer(Modifier.height(50.dp))
-
-        Column(
+        LazyColumn(
+            contentPadding = PaddingValues(top = 50.dp),
             verticalArrangement = Arrangement.spacedBy(20.dp),
             modifier = Modifier.weight(1f)
         ) {
-            SignUpFormTextField(
-                titleLabelRes = R.string.id_label,
-                placeholderRes = R.string.id_hint,
-                value = id,
-                onValueChange = onIdChange,
-                registerError = RegisterError.ID_ERROR
-            )
+            item {
+                SignUpFormTextField(
+                    titleLabelRes = R.string.id_label,
+                    placeholderRes = R.string.id_hint,
+                    value = id,
+                    onValueChange = onIdChange,
+                    registerError = RegisterError.ID_ERROR
+                )
+            }
 
-            SignUpFormTextField(
-                titleLabelRes = R.string.password_label,
-                placeholderRes = R.string.password_hint,
-                value = password,
-                onValueChange = onPasswordChange,
-                registerError = RegisterError.PASSWORD_ERROR
-            )
+            item {
+                SignUpFormTextField(
+                    titleLabelRes = R.string.password_label,
+                    placeholderRes = R.string.password_hint,
+                    value = password,
+                    onValueChange = onPasswordChange,
+                    registerError = RegisterError.PASSWORD_ERROR
+                )
+            }
 
-            SignUpFormTextField(
-                titleLabelRes = R.string.name_label,
-                placeholderRes = R.string.name_hint,
-                value = name,
-                onValueChange = onNameChange,
-                registerError = RegisterError.NAME_ERROR
-            )
+            item {
+                SignUpFormTextField(
+                    titleLabelRes = R.string.name_label,
+                    placeholderRes = R.string.name_hint,
+                    value = name,
+                    onValueChange = onNameChange,
+                    registerError = RegisterError.NAME_ERROR
+                )
+            }
 
-            SignUpFormTextField(
-                titleLabelRes = R.string.email_label,
-                placeholderRes = R.string.email_hint,
-                value = email,
-                onValueChange = onEmailChange,
-                registerError = RegisterError.EMAIL_ERROR
-            )
+            item {
+                SignUpFormTextField(
+                    titleLabelRes = R.string.email_label,
+                    placeholderRes = R.string.email_hint,
+                    value = email,
+                    onValueChange = onEmailChange,
+                    registerError = RegisterError.EMAIL_ERROR
+                )
+            }
 
-            SignUpFormTextField(
-                titleLabelRes = R.string.age_label,
-                placeholderRes = R.string.age_hint,
-                value = age,
-                onValueChange = onAgeChange,
-                registerError = RegisterError.AGE_ERROR
-            )
+            item {
+                SignUpFormTextField(
+                    titleLabelRes = R.string.age_label,
+                    placeholderRes = R.string.age_hint,
+                    value = age,
+                    onValueChange = onAgeChange,
+                    registerError = RegisterError.AGE_ERROR
+                )
+            }
         }
 
         DiveBasicButton(
             text = stringResource(R.string.do_signup),
             onClick = onSignUpClick
-        )
-    }
-}
-
-@Composable
-private fun SignUpFormTextField(
-    @StringRes titleLabelRes: Int,
-    @StringRes placeholderRes: Int,
-    value: String,
-    onValueChange: (String) -> Unit,
-    registerError: RegisterError,
-    modifier: Modifier = Modifier
-) {
-    val isError = value.isNotBlank() && !registerError.validation(value)
-
-    Column(
-        modifier = modifier
-    ) {
-        Text(
-            text = stringResource(titleLabelRes),
-            fontSize = 32.sp,
-            fontWeight = FontWeight.Normal,
-        )
-
-        ErrorLabelTextField(
-            value = value,
-            onValueChange = onValueChange,
-            errorMessage = registerError.message,
-            isError = isError,
-            placeholder = stringResource(placeholderRes),
-            visualTransformation = when (registerError) {
-                RegisterError.PASSWORD_ERROR -> PasswordVisualTransformation()
-                RegisterError.EMAIL_ERROR -> VisualTransformation.None
-                else -> VisualTransformation.None
-            },
-            keyboardOptions = KeyboardOptions(
-                keyboardType = when (registerError) {
-                    RegisterError.AGE_ERROR -> KeyboardType.Number
-                    else -> KeyboardType.Text
-                },
-                imeAction = when (registerError) {
-                    RegisterError.AGE_ERROR -> ImeAction.Done
-                    else -> ImeAction.Next
-                }
-            )
         )
     }
 }
