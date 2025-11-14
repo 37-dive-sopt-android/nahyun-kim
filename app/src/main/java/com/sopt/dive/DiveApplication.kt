@@ -1,8 +1,7 @@
 package com.sopt.dive
 
 import android.app.Application
-import com.sopt.dive.data.local.di.AppContainer
-import com.sopt.dive.data.local.prefs.UserPreferences
+import com.sopt.dive.data.di.AppContainer
 
 class DiveApplication : Application() {
     lateinit var appContainer: AppContainer

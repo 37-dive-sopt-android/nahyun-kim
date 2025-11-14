@@ -28,7 +28,7 @@ import com.sopt.dive.DiveApplication
 import com.sopt.dive.R
 import com.sopt.dive.core.designsystem.theme.DiveTheme
 import com.sopt.dive.core.util.noRippleClickable
-import com.sopt.dive.domain.model.auth.UserInfo
+import com.sopt.dive.domain.model.auth.UserInfoModel
 import com.sopt.dive.presentation.mypage.component.ProfileSpringCard
 
 @Composable
@@ -44,14 +44,14 @@ fun MyPageRoute(
             userPrefs.logout()
             navigateToSignIn()
         },
-        userInfo = userPrefs.getUserInfo(),
+        userInfoModel = userPrefs.getUserInfo(),
         modifier = Modifier.padding(paddingValues)
     )
 }
 
 @Composable
 private fun MypageScreen(
-    userInfo: UserInfo,
+    userInfoModel: UserInfoModel,
     onLogoutClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -71,25 +71,25 @@ private fun MypageScreen(
 
         UserInfoRow(
             titleLabelRes = R.string.id_label,
-            infoText = userInfo.id,
+            infoText = userInfoModel.id,
             modifier = Modifier.fillMaxWidth()
         )
 
         UserInfoRow(
             titleLabelRes = R.string.password_label,
-            infoText = userInfo.password,
+            infoText = userInfoModel.password,
             modifier = Modifier.fillMaxWidth()
         )
 
         UserInfoRow(
             titleLabelRes = R.string.nickname_label,
-            infoText = userInfo.nickname,
+            infoText = userInfoModel.nickname,
             modifier = Modifier.fillMaxWidth()
         )
 
         UserInfoRow(
             titleLabelRes = R.string.mbti_label,
-            infoText = userInfo.mbti,
+            infoText = userInfoModel.mbti,
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -150,7 +150,7 @@ private fun MainScreenPreview() {
     DiveTheme {
         MypageScreen(
             onLogoutClick = {},
-            userInfo = UserInfo(
+            userInfoModel = UserInfoModel(
                 id = "nahyun",
                 password = "password",
                 nickname = "작나",

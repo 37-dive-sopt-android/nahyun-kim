@@ -43,7 +43,7 @@ fun SignUpRoute(
     viewModel: SignUpViewModel = viewModel()
 ) {
     val context = LocalContext.current
-    val userInfo by viewModel.userInfo.collectAsStateWithLifecycle()
+    val userInfo by viewModel.userInfoModel.collectAsStateWithLifecycle()
 
     SignUpScreen(
         modifier = Modifier.padding(paddingValues),

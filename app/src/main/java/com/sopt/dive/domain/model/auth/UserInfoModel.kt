@@ -1,20 +1,20 @@
 package com.sopt.dive.domain.model.auth
 
-data class UserInfo(
+data class UserInfoModel(
     val id: String,
     val password: String,
     val nickname: String,
     val mbti: String
 ) {
     companion object {
-        val Empty = UserInfo(
+        val Empty = UserInfoModel(
             id = "",
             password = "",
             nickname = "",
             mbti = ""
         )
 
-        val Fake = UserInfo(
+        val Fake = UserInfoModel(
             id = "id",
             password = "password",
             nickname = "nickname",
