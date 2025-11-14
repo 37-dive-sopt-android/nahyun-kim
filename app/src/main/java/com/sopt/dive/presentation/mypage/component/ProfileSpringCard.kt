@@ -111,7 +111,7 @@ private fun FrontImageCard(
         contentScale = ContentScale.Crop,
         modifier = modifier
             .offset(x = offset.dp, y = offset.dp)
-            .noRippleClickable(onClick = { onClick() })
+            .noRippleClickable(onClick = onClick)
             .zIndex(if (rotation <= 90f) 1f else -1f)
             .graphicsLayer {
                 rotationY = rotation
