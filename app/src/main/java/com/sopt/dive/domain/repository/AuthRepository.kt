@@ -7,4 +7,12 @@ interface AuthRepository {
         userName: String,
         password: String
     ): Result<LoginModel>
+
+    suspend fun signUp(
+        userName: String,
+        password: String,
+        name: String,
+        email: String,
+        age: Int
+    ): Result<Unit>
 }

@@ -8,7 +8,6 @@ import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
-import com.sopt.dive.presentation.home.navigation.Home
 import com.sopt.dive.presentation.home.navigation.navigateToHome
 import com.sopt.dive.presentation.mypage.navigation.navigateToMyPage
 import com.sopt.dive.presentation.search.navigation.navigateToSearch
@@ -26,7 +25,7 @@ class MainNavigator(
     val navController: NavHostController,
     coroutineScope: CoroutineScope,
 ) {
-    val startDestination = SignIn()
+    val startDestination = SignIn
 
     private val currentDestination = navController.currentBackStackEntryFlow
         .map { it.destination }
@@ -93,11 +92,8 @@ class MainNavigator(
         navController.navigateToSignUp()
     }
 
-    fun navigateToSignIn(
-        registerInfo: SignIn? = null
-    ) {
+    fun navigateToSignIn() {
         navController.navigateToSignIn(
-            registerInfo = registerInfo,
             navOptions = navOptions {
                 popUpTo(navController.graph.id) {
                     inclusive = true

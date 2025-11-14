@@ -1,16 +1,25 @@
 package com.sopt.dive.core.util
 
+import androidx.core.text.isDigitsOnly
+
 object AuthValidator {
-    private val idRegex = "[^a-zA-Z0-9가-힣]".toRegex()
-    private val passwordRegex = "[^a-zA-Z0-9~!@#\$%^&*]".toRegex()
-    private val nicknameRegex = "[^a-zA-Z0-9가-힣]".toRegex()
-    private val mbtiRegex = "^[E|I][N|S][F|T][J|P]$".toRegex()
+    private val idRegex = "^[a-zA-Z0-9]{1,50}$".toRegex()
+    private val passwordRegex =
+        """^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[~!@#$%^&*])[A-Za-z\d~!@#$%^&*]{8,64}$""".toRegex()
+    private val nameRegex = "^[a-zA-Z가-힣\\s]{1,100}$".toRegex()
+    private val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$".toRegex()
 
-    fun validateId(id: String) = !idRegex.containsMatchIn(id) && id.length in 6 .. 10
+    fun validateId(id: String): Boolean =
+        id.isNotBlank() && idRegex.matches(id)
 
-    fun validatePassword(password: String) = !passwordRegex.containsMatchIn(password) && password.length in 8 .. 12
+    fun validatePassword(password: String): Boolean =
+        password.isNotBlank() && passwordRegex.matches(password)
 
-    fun validateNickname(nickname: String) = !nicknameRegex.containsMatchIn(nickname) && nickname.isNotBlank()
+    fun validateName(name: String): Boolean =
+        name.isNotBlank() && nameRegex.matches(name)
 
-    fun validateMbti(mbti: String) = mbtiRegex.containsMatchIn(mbti.uppercase())
+    fun validateEmail(email: String): Boolean =
+        email.isNotBlank() && email.length <= 150 && emailRegex.matches(email)
+
+    fun validateAge(age: String) = age.isDigitsOnly() && age.toInt() >= 0
 }

@@ -82,14 +82,14 @@ private fun MypageScreen(
         )
 
         UserInfoRow(
-            titleLabelRes = R.string.nickname_label,
+            titleLabelRes = R.string.name_label,
             infoText = userInfoModel.nickname,
             modifier = Modifier.fillMaxWidth()
         )
 
         UserInfoRow(
-            titleLabelRes = R.string.mbti_label,
-            infoText = userInfoModel.mbti,
+            titleLabelRes = R.string.age_label,
+            infoText = "${userInfoModel.age}",
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -154,8 +154,9 @@ private fun MainScreenPreview() {
                 id = "nahyun",
                 password = "password",
                 nickname = "작나",
-                mbti = "ESTP"
-            ),
+                email = "user@gmail.com",
+                age = 23
+            )
         )
     }
 }

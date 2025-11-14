@@ -23,11 +23,13 @@ object ApiFactory {
         .addInterceptor(loggingInterceptor)
         .build()
 
+    private val json = Json { ignoreUnknownKeys = true }
+
     val retrofit: Retrofit by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(client)
-            .addConverterFactory(Json.asConverterFactory(CONTENT_TYPE.toMediaType()))
+            .addConverterFactory(json.asConverterFactory(CONTENT_TYPE.toMediaType()))
             .build()
     }
 
