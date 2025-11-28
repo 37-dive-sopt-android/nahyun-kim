@@ -26,7 +26,7 @@ class HomeViewModel(
     }
 
     fun loadMyProfileInfo() {
-        viewModelScope.launch {
+        viewModelScope.launch { // coroutine
             userRepository.getMyProfile()
                 .onSuccess { result ->
                     _uiState.update {
