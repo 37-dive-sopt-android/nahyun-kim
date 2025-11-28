@@ -3,6 +3,7 @@ package com.sopt.dive.core.util
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 
+// flow
 inline fun <T> MutableStateFlow<UiState<T>>.updateSuccess(
     crossinline onUpdate: (T) -> T
 ) {
