@@ -1,64 +1,64 @@
 package com.sopt.dive.presentation.signin
 
-import androidx.lifecycle.SavedStateHandle
+import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.navigation.toRoute
-import com.sopt.dive.data.local.UserPreferences
-import com.sopt.dive.domain.model.auth.LoginError
-import com.sopt.dive.domain.model.auth.LoginResult
-import com.sopt.dive.presentation.signin.navigation.SignIn
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
+import com.sopt.dive.DiveApplication
+import com.sopt.dive.domain.repository.AuthRepository
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 class SignInViewModel(
-    savedStateHandle: SavedStateHandle
+    private val authRepository: AuthRepository
 ) : ViewModel() {
-    val registerUserInfo = savedStateHandle.toRoute<SignIn>()
+    private val _uiState = MutableStateFlow(SignInUiState())
+    val uiState: StateFlow<SignInUiState> = _uiState.asStateFlow()
 
-    private val _id = MutableStateFlow("")
-    val id: StateFlow<String> = _id
-
-    private val _password = MutableStateFlow("")
-    val password: StateFlow<String> = _password
+    private val _sideEffect = MutableSharedFlow<LoginSideEffect>()
+    val sideEffect: SharedFlow<LoginSideEffect> = _sideEffect.asSharedFlow()
 
     fun onIdChange(id: String) {
-        _id.update { id }
+        _uiState.update { it.copy(id = id) }
     }
 
     fun onPasswordChange(password: String) {
-        _password.update { password }
+        _uiState.update { it.copy(password = password) }
     }
 
-    fun getLoginResult(): LoginResult {
-        val idValue = id.value
-        val pwValue = password.value
-
-        return when {
-            idValue.isBlank() || pwValue.isBlank() -> { // 로그인 정보 없음
-                LoginResult.Failure(LoginError.LOGIN_EMPTY)
-            }
-
-            registerUserInfo.id.isBlank() || registerUserInfo.password.isBlank() -> { // 회원가입 전
-                LoginResult.Failure(LoginError.NOT_REGISTER)
-            }
-
-            idValue == registerUserInfo.id && pwValue == registerUserInfo.password -> { // 로그인 성공
-                LoginResult.Success
-            }
-
-            else -> { // 회원가입 정보와 불일치
-                LoginResult.Failure(LoginError.INVALID_INFO)
+    fun tryLogin() {
+        viewModelScope.launch {
+            authRepository.login(
+                userName = uiState.value.id,
+                password = uiState.value.password
+            ).onSuccess {
+                _sideEffect.emit(LoginSideEffect.NavigateToHome)
+            }.onFailure {
+                _sideEffect.emit(LoginSideEffect.ShowErrorToast(it.message ?: "로그인 실패"))
             }
         }
     }
 
-    fun saveUserInfo() {
-        UserPreferences.saveUserInfo(
-            id = id.value,
-            password = password.value,
-            nickname = registerUserInfo.nickname,
-            mbti = registerUserInfo.mbti
-        )
+    companion object {
+        fun provideFactory(app: DiveApplication): ViewModelProvider.Factory =
+            viewModelFactory {
+                initializer {
+                    val repo = app.appContainer.authRepository
+                    SignInViewModel(repo)
+                }
+            }
     }
+}
+
+sealed interface LoginSideEffect {
+    data object NavigateToHome : LoginSideEffect
+    data class ShowErrorToast(val message: String) : LoginSideEffect
 }

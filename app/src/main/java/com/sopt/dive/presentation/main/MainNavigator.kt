@@ -26,7 +26,7 @@ class MainNavigator(
     val navController: NavHostController,
     coroutineScope: CoroutineScope,
 ) {
-    val startDestination = Home
+    val startDestination = SignIn
 
     private val currentDestination = navController.currentBackStackEntryFlow
         .map { it.destination }
@@ -93,11 +93,8 @@ class MainNavigator(
         navController.navigateToSignUp()
     }
 
-    fun navigateToSignIn(
-        registerInfo: SignIn? = null
-    ) {
+    fun navigateToSignIn() {
         navController.navigateToSignIn(
-            registerInfo = registerInfo,
             navOptions = navOptions {
                 popUpTo(navController.graph.id) {
                     inclusive = true

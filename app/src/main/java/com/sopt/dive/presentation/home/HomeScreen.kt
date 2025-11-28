@@ -1,15 +1,19 @@
 package com.sopt.dive.presentation.home
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -18,10 +22,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.sopt.dive.DiveApplication
 import com.sopt.dive.R
 import com.sopt.dive.core.designsystem.theme.DiveTheme
+import com.sopt.dive.core.util.UiState
 import com.sopt.dive.domain.model.friend.FriendProfile
-import com.sopt.dive.presentation.home.HomeViewModel.Companion.dummyFriendProfiles
 import com.sopt.dive.presentation.home.component.FriendCard
 import com.sopt.dive.presentation.home.component.MyProfileCard
 import kotlinx.collections.immutable.ImmutableList
@@ -29,17 +34,33 @@ import kotlinx.collections.immutable.ImmutableList
 @Composable
 fun HomeRoute(
     paddingValues: PaddingValues,
-    viewModel: HomeViewModel = viewModel()
 ) {
-    val userInfo by viewModel.myProfile.collectAsStateWithLifecycle()
-    val friendList by viewModel.friendProfile.collectAsStateWithLifecycle()
+    val context = LocalContext.current
+    val app = context.applicationContext as DiveApplication
 
-
-    HomeScreen(
-        myNickname = userInfo.nickname,
-        friendList = friendList,
-        modifier = Modifier.padding(paddingValues)
+    val viewModel: HomeViewModel = viewModel(
+        factory = HomeViewModel.provideFactory(app)
     )
+
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    when (val state = uiState) {
+        is UiState.Success -> HomeScreen(
+            myNickname = state.data.myProfile.id,
+            friendList = state.data.friendList,
+            modifier = Modifier.padding(paddingValues)
+        )
+        is UiState.Loading -> {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
+            }
+        }
+        else -> {}
+    }
 }
 
 @Composable

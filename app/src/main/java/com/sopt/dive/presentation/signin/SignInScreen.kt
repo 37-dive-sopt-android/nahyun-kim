@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,45 +26,47 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.sopt.dive.DiveApplication
 import com.sopt.dive.R
 import com.sopt.dive.core.designsystem.component.DiveBasicButton
 import com.sopt.dive.core.designsystem.theme.DiveTheme
 import com.sopt.dive.core.ui.component.textfield.LabelTextField
 import com.sopt.dive.core.ui.component.textfield.PasswordTextField
 import com.sopt.dive.core.util.noRippleClickable
-import com.sopt.dive.domain.model.auth.LoginResult
 
 @Composable
 fun SignInRoute(
     paddingValues: PaddingValues,
     navigateToMain: () -> Unit,
-    navigateToSignUp: () -> Unit,
-    viewModel: SignInViewModel = viewModel()
+    navigateToSignUp: () -> Unit
 ) {
     val context = LocalContext.current
+    val app = context.applicationContext as DiveApplication
 
-    val id by viewModel.id.collectAsStateWithLifecycle()
-    val password by viewModel.password.collectAsStateWithLifecycle()
+    val viewModel: SignInViewModel = viewModel(
+        factory = SignInViewModel.provideFactory(app)
+    )
+
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(viewModel.sideEffect) {
+        viewModel.sideEffect.collect { event ->
+            when (event) {
+                is LoginSideEffect.NavigateToHome -> navigateToMain()
+                is LoginSideEffect.ShowErrorToast -> {
+                    Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
 
     SignInScreen(
         modifier = Modifier.padding(paddingValues),
-        id = id,
-        password = password,
+        id = uiState.id,
+        password = uiState.password,
         onIdChange = viewModel::onIdChange,
         onPasswordChange = viewModel::onPasswordChange,
-        onLoginClick = {
-            val loginResult = viewModel.getLoginResult()
-
-            when (loginResult) {
-                is LoginResult.Success -> {
-                    viewModel.saveUserInfo()
-                    navigateToMain()
-                }
-                is LoginResult.Failure -> {
-                    Toast.makeText(context, loginResult.errorType.errorMessage, Toast.LENGTH_SHORT).show()
-                }
-            }
-        },
+        onLoginClick = viewModel::tryLogin,
         onSignUpClick = navigateToSignUp
     )
 }
