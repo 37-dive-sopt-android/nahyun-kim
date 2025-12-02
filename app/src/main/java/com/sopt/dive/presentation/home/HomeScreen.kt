@@ -1,6 +1,5 @@
 package com.sopt.dive.presentation.home
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -27,7 +26,7 @@ import com.sopt.dive.R
 import com.sopt.dive.core.designsystem.theme.DiveTheme
 import com.sopt.dive.core.util.UiState
 import com.sopt.dive.domain.model.friend.FriendProfile
-import com.sopt.dive.presentation.home.component.FriendCard
+import com.sopt.dive.presentation.home.component.FriendProfileCard
 import com.sopt.dive.presentation.home.component.MyProfileCard
 import kotlinx.collections.immutable.ImmutableList
 
@@ -93,10 +92,9 @@ private fun HomeScreen(
 
         itemsIndexed(
             items = friendList,
-            key = { index, friend -> "${index}-${friend.nickname}" }
+            key = { index, friend -> "${index}-${friend.name}" }
         ) { index, friend ->
-            FriendCard(
-                order = index + 1,
+            FriendProfileCard(
                 friendProfile = friend,
                 modifier = Modifier.fillMaxWidth()
             )
@@ -108,9 +106,9 @@ private fun HomeScreen(
 @Composable
 private fun HomeScreenPreview() {
     DiveTheme {
-        HomeScreen(
-            myNickname = "잠만보",
-            friendList = dummyFriendProfiles
-        )
+//        HomeScreen(
+//            myNickname = "잠만보",
+//            friendList = dummyFriendProfiles
+//        )
     }
 }

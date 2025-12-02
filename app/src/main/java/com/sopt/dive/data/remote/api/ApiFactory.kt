@@ -33,7 +33,16 @@ object ApiFactory {
             .build()
     }
 
+    val openApiRetrofit: Retrofit by lazy {
+        Retrofit.Builder()
+            .baseUrl(BuildConfig.OPEN_BASE_URL)
+            .client(client)
+            .addConverterFactory(json.asConverterFactory(CONTENT_TYPE.toMediaType()))
+            .build()
+    }
+
     inline fun <reified T> create(isOpenApi: Boolean = false): T {
-        return retrofit.create(T::class.java)
+        return if (isOpenApi) openApiRetrofit.create(T::class.java)
+        else retrofit.create(T::class.java)
     }
 }

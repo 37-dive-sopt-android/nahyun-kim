@@ -19,7 +19,10 @@ class AppContainer(context: Context) {
         context.applicationContext.getSharedPreferences(SPF_KEY, Context.MODE_PRIVATE)
 
     private val authDataSource: AuthDataSource = AuthDataSourceImpl(ServicePool.authApiService)
-    private val userDataSource: UserDataSource = UserDataSourceImpl(ServicePool.userApiService)
+    private val userDataSource: UserDataSource = UserDataSourceImpl(
+        apiService = ServicePool.userApiService,
+        openApiService = ServicePool.openApiService
+    )
 
     private val userPreferences: UserPreferences = UserPreferences(prefs)
 

@@ -26,7 +26,7 @@ class MainNavigator(
     val navController: NavHostController,
     coroutineScope: CoroutineScope,
 ) {
-    val startDestination = SignIn
+    val startDestination = Home
 
     private val currentDestination = navController.currentBackStackEntryFlow
         .map { it.destination }
