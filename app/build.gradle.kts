@@ -30,6 +30,16 @@ android {
             "BASE_URL",
             gradleLocalProperties(rootDir, providers).getProperty("base.url")
         )
+        buildConfigField(
+            "String",
+            "OPEN_BASE_URL",
+            gradleLocalProperties(rootDir, providers).getProperty("open.base.url")
+        )
+        buildConfigField(
+            "String",
+            "OPEN_API_KEY",
+            gradleLocalProperties(rootDir, providers).getProperty("open.api.key")
+        )
     }
 
     buildTypes {
@@ -82,4 +92,6 @@ dependencies {
     implementation(libs.retrofit.core)
     implementation(libs.retrofit.kotlin.serialization)
     implementation(libs.okhttp.logging)
+
+    implementation(libs.coil.compose)
 }

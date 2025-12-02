@@ -2,6 +2,7 @@ package com.sopt.dive.data.datasource
 
 import com.sopt.dive.data.remote.dto.base.BaseResponse
 import com.sopt.dive.data.remote.dto.request.SignUpRequestDto
+import com.sopt.dive.data.remote.dto.response.FriendResponseDto
 import com.sopt.dive.data.remote.dto.response.ProfileResponseDto
 
 interface UserDataSource {
@@ -12,4 +13,6 @@ interface UserDataSource {
     suspend fun getProfile(
         userId: Long
     ): BaseResponse<ProfileResponseDto>
+
+    suspend fun getFriends(): FriendResponseDto
 }
